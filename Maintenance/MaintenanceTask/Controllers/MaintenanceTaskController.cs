@@ -8,6 +8,11 @@ namespace Maintenance.Controllers
     {
         private IMaintenanceTaskRepository _repository;
 
+        public MaintenanceTaskController()
+        {
+            _repository = new MaintenanceTaskRepository();
+        }
+
         public MaintenanceTaskController(IMaintenanceTaskRepository repository)
         {
             _repository = repository;

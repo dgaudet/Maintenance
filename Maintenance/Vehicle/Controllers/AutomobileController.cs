@@ -8,6 +8,11 @@ namespace Maintenance.Vehicle.Controllers
     {
         private IAutomobileRepository _repository;
 
+        public AutomobileController()
+        {
+            _repository = new AutomobileRepository();
+        }
+
         public AutomobileController(IAutomobileRepository repository)
         {
             _repository = repository;
