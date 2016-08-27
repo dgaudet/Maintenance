@@ -1,8 +1,7 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Maintenance.Automobile;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Maintenance.Vehicle;
 
-namespace Maintenance.Tests.Automobile
+namespace Maintenance.Tests.Vehicle
 {
     [TestClass]
     public class AutomobileRepositoryTest

@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Maintenance.Vehicle.Models;
+using System.Collections.Generic;
 
-namespace Maintenance.Automobile
+namespace Maintenance.Vehicle
 {
     public interface IAutomobileRepository
     {

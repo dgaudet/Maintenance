@@ -88,8 +88,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Automobile\Automobile.cs" />
-    <Compile Include="Automobile\AutomobileRepository.cs" />
+    <Compile Include="Vehicle\Models\Automobile.cs" />
+    <Compile Include="Vehicle\Controllers\AutomobileController.cs" />
+    <Compile Include="Vehicle\AutomobileRepository.cs" />
+    <Compile Include="Vehicle\IAutomobileRepository.cs" />
     <Compile Include="MaintenanceTask\Controllers\MaintenanceTaskController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

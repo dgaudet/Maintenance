@@ -1,5 +1,5 @@
 ﻿
-namespace Maintenance.Automobile
+namespace Maintenance.Vehicle.Models
 {
     public class Automobile
     {
