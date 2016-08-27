@@ -14,37 +14,49 @@ namespace Maintenance.Tests.Vehicle
         }
 
         [TestMethod]
-        public void GetAutomobile_ShouldReturnNull_GivenNonExistingId()
+        public void GetAutomobile_ShouldReturnNull_GivenNonExistingVin()
         {
-            Assert.IsNull(_repo.GetAutomobile(0));
+            Assert.IsNull(_repo.GetAutomobile("non existing"));
         }
 
         [TestMethod]
-        public void GetAutomobile_ShouldReturnCorrectAutomobile_GivenExistingId1()
+        public void GetAutomobile_ShouldReturnCorrectAutomobile_GivenExistingVin1()
         {
-            var auto = _repo.GetAutomobile(1);
+            var vin = "OrangeCar1";
+
+            var auto = _repo.GetAutomobile(vin);
             Assert.IsNotNull(auto);
-            Assert.AreEqual(auto.Id, 1);
-            Assert.AreEqual(auto.VIN, "OrangeCar1");
-            Assert.AreEqual(auto.Odometer, 3000);
-            Assert.AreEqual(auto.Make, "Tesla");
-            Assert.AreEqual(auto.Model, "Roadster");
-            Assert.AreEqual(auto.Year, 2011);
-            Assert.AreEqual(auto.BatteryPackWeight, 2877);
+            Assert.AreEqual(vin, auto.VIN);
+            Assert.AreEqual(3000, auto.Odometer);
+            Assert.AreEqual("Tesla", auto.Make);
+            Assert.AreEqual("Roadster", auto.Model);
+            Assert.AreEqual(2011, auto.Year);
+            Assert.AreEqual(2877, auto.BatteryPackWeight);
         }
 
         [TestMethod]
-        public void GetAutomobile_ShouldReturnCorrectAutomobile_GivenExistingId2()
+        public void GetAutomobile_ShouldReturnCorrectAutomobile_GivenExistingVin2()
         {
-            var auto = _repo.GetAutomobile(2);
+            var vin = "GreenCar1";
+
+            var auto = _repo.GetAutomobile(vin);
             Assert.IsNotNull(auto);
-            Assert.AreEqual(auto.Id, 2);
-            Assert.AreEqual(auto.VIN, "GreenCar1");
-            Assert.AreEqual(auto.Odometer, 15000);
-            Assert.AreEqual(auto.Make, "Chevy");
-            Assert.AreEqual(auto.Model, "Volt");
-            Assert.AreEqual(auto.Year, 2012);
-            Assert.AreEqual(auto.BatteryPackWeight, 435);
+            Assert.AreEqual(vin, auto.VIN);
+            Assert.AreEqual(15000, auto.Odometer);
+            Assert.AreEqual("Chevy", auto.Make);
+            Assert.AreEqual("Volt", auto.Model);
+            Assert.AreEqual(2012, auto.Year);
+            Assert.AreEqual(435, auto.BatteryPackWeight);
+        }
+
+        [TestMethod]
+        public void GetAutomobile_ShouldReturnCorrectAutomobile_GivenExistingVinButDifferentVinCase()
+        {
+            var vin = "greencar1";
+
+            var auto = _repo.GetAutomobile(vin);
+            Assert.IsNotNull(auto);
+            Assert.IsTrue(vin.Equals(auto.VIN, System.StringComparison.InvariantCultureIgnoreCase));
         }
 
         [TestMethod]
@@ -59,10 +71,10 @@ namespace Maintenance.Tests.Vehicle
         public void GetAutomobiles_ShouldReturnTheSameAutosAsGetAutomobile()
         {
             var tasks = _repo.GetAutomobiles();
+
             Assert.IsNotNull(tasks);
-            var automobile1 = _repo.GetAutomobile(1);
+            var automobile1 = _repo.GetAutomobile("OrangeCar1");
             Assert.IsNotNull(automobile1);
-            Assert.AreEqual(tasks[0].Id, automobile1.Id);
             Assert.AreEqual(tasks[0].VIN, automobile1.VIN);
             Assert.AreEqual(tasks[0].Odometer, automobile1.Odometer);
             Assert.AreEqual(tasks[0].Make, automobile1.Make);
@@ -70,9 +82,8 @@ namespace Maintenance.Tests.Vehicle
             Assert.AreEqual(tasks[0].Year, automobile1.Year);
             Assert.AreEqual(automobile1.BatteryPackWeight, 2877);
 
-            var automobile2 = _repo.GetAutomobile(2);
+            var automobile2 = _repo.GetAutomobile("GreenCar1");
             Assert.IsNotNull(automobile2);
-            Assert.AreEqual(tasks[1].Id, automobile2.Id);
             Assert.AreEqual(tasks[1].VIN, automobile2.VIN);
             Assert.AreEqual(tasks[1].Odometer, automobile2.Odometer);
             Assert.AreEqual(tasks[1].Make, automobile2.Make);

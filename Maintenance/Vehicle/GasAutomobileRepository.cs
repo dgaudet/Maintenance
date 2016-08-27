@@ -11,13 +11,13 @@ namespace Maintenance.Vehicle
         public GasAutomobileRepository()
         {
             _storedAutos = new List<GasAutomobile>();
-            _storedAutos.Add(new GasAutomobile() { Id = 1, VIN = "RedCar1", Odometer = 5000, Make = "Nissan", Model = "Murano", Year = 2011, NumberOfSparkPlugs = 6 });
-            _storedAutos.Add(new GasAutomobile() { Id = 2, VIN = "BlueCar1", Odometer = 15000, Make = "Nissan", Model = "Frontier", Year = 2006, NumberOfSparkPlugs = 8 });
+            _storedAutos.Add(new GasAutomobile() { VIN = "RedCar1", Odometer = 5000, Make = "Nissan", Model = "Murano", Year = 2011, NumberOfSparkPlugs = 6 });
+            _storedAutos.Add(new GasAutomobile() { VIN = "BlueCar1", Odometer = 15000, Make = "Nissan", Model = "Frontier", Year = 2006, NumberOfSparkPlugs = 8 });
         }
 
         public GasAutomobile GetAutomobile(string VIN)
         {
-            return _storedAutos.FirstOrDefault(x => x.VIN == VIN);
+            return _storedAutos.FirstOrDefault(x => x.VIN.Equals(VIN, StringComparison.InvariantCultureIgnoreCase));
         }
 
         public List<GasAutomobile> GetAutomobiles()

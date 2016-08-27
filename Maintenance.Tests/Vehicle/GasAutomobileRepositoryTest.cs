@@ -52,6 +52,16 @@ namespace Maintenance.Tests.Vehicle
         }
 
         [TestMethod]
+        public void GetAutomobile_ShouldReturnCorrectAutomobile_GivenExistingVinButDifferentVinCase()
+        {
+            var vin = "bluecar1";
+
+            var auto = _repo.GetAutomobile(vin);
+            Assert.IsNotNull(auto);
+            Assert.IsTrue(vin.Equals(auto.VIN, System.StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        [TestMethod]
         public void GetAutomobiles_ShouldReturnTwo()
         {
             var autos = _repo.GetAutomobiles();
@@ -114,7 +124,6 @@ namespace Maintenance.Tests.Vehicle
             var actualAuto = _repo.GetAutomobile(expectedAuto.VIN);
 
             Assert.IsNotNull(actualAuto);
-            Assert.AreEqual(expectedAuto.Id, actualAuto.Id);
             Assert.AreEqual(expectedAuto.VIN, actualAuto.VIN);
             Assert.AreEqual(expectedAuto.Odometer, actualAuto.Odometer);
             Assert.AreEqual(expectedAuto.Make, actualAuto.Make);

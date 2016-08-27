@@ -21,25 +21,25 @@ namespace Maintenance.Tests.Vehicle
         }
 
         [TestMethod]
-        public void GetAutomobile_ShouldCallRepository_GetAutomobileWithCorrectId()
+        public void GetAutomobile_ShouldCallRepository_GetAutomobileWithCorrectVin()
         {
             var _mockRepo = new Mock<IElectricAutomobileRepository>();
             var controller = new ElectricAutomobileController(_mockRepo.Object);
-            var id = 1;
+            var vin = "1";
 
-            controller.GetAutomobile(id);
+            controller.GetAutomobile(vin);
 
-            _mockRepo.Verify(m => m.GetAutomobile(id));
+            _mockRepo.Verify(m => m.GetAutomobile(vin));
         }
 
         [TestMethod]
         public void GetAutomobile_ShouldReturnNotFound_GivenNoAutoReturnedFromRepo()
         {
             var controller = new ElectricAutomobileController(_mockRepo.Object);
-            var id = 1;
-            _mockRepo.Setup(m => m.GetAutomobile(id)).Returns((ElectricAutomobile)null);
+            var vin = "1";
+            _mockRepo.Setup(m => m.GetAutomobile(vin)).Returns((ElectricAutomobile)null);
 
-            IHttpActionResult result = controller.GetAutomobile(id);
+            IHttpActionResult result = controller.GetAutomobile(vin);
 
             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
@@ -47,12 +47,12 @@ namespace Maintenance.Tests.Vehicle
         [TestMethod]
         public void GetAutomobile_ShouldReturnAuto_GivenAutoReturnedFromRepo()
         {
-            var id = 1;
-            var auto = new ElectricAutomobile() { Id = id };
+            var vin = "1";
+            var auto = new ElectricAutomobile() { VIN = vin };
             var controller = new ElectricAutomobileController(_mockRepo.Object);
-            _mockRepo.Setup(m => m.GetAutomobile(id)).Returns(auto);
+            _mockRepo.Setup(m => m.GetAutomobile(vin)).Returns(auto);
 
-            IHttpActionResult actionResult = controller.GetAutomobile(id);
+            IHttpActionResult actionResult = controller.GetAutomobile(vin);
             var result = actionResult as OkNegotiatedContentResult<ElectricAutomobile>;
 
             Assert.IsNotNull(result);
@@ -83,14 +83,14 @@ namespace Maintenance.Tests.Vehicle
         }
 
         [TestMethod]
-        public void GetAllAutomobiles_ShouldReturnTask_GivenAutosReturnedFromRepo()
+        public void GetAllAutomobiles_ShouldReturnAuto_GivenAutosReturnedFromRepo()
         {
-            var id = 1;
-            var auto = new ElectricAutomobile() { Id = id };
-            var tasks = new List<ElectricAutomobile>();
-            tasks.Add(auto);
+            var vin = "1";
+            var auto = new ElectricAutomobile() { VIN = vin };
+            var autos = new List<ElectricAutomobile>();
+            autos.Add(auto);
             var controller = new ElectricAutomobileController(_mockRepo.Object);
-            _mockRepo.Setup(m => m.GetAutomobiles()).Returns(tasks);
+            _mockRepo.Setup(m => m.GetAutomobiles()).Returns(autos);
 
             var result = controller.GetAllAutomobiles();
 

@@ -5,7 +5,7 @@ namespace Maintenance.Vehicle
 {
     public interface IElectricAutomobileRepository
     {
-        ElectricAutomobile GetAutomobile(int id);
         List<ElectricAutomobile> GetAutomobiles();
+        ElectricAutomobile GetAutomobile(string vin);
     }
 }
