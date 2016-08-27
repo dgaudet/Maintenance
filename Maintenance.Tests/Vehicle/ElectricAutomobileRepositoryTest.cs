@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Maintenance.Vehicle;
+using Maintenance.Vehicle.Models;
 
 namespace Maintenance.Tests.Vehicle
 {
@@ -90,6 +91,68 @@ namespace Maintenance.Tests.Vehicle
             Assert.AreEqual(tasks[1].Model, automobile2.Model);
             Assert.AreEqual(tasks[1].Year, automobile2.Year);
             Assert.AreEqual(automobile2.BatteryPackWeight, 435);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void InsertAutomobile_ShouldThrowArugumentException_GivenNull()
+        {
+            _repo.InsertAutomobile(null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void InsertAutomobile_ShouldThrowArugumentException_GivenAutoWithNullVIN()
+        {
+            _repo.InsertAutomobile(new ElectricAutomobile());
+        }
+
+        [TestMethod]
+        public void InsertAutomobile_ShouldAllowInsertingAutomobile()
+        {
+            _repo.InsertAutomobile(new ElectricAutomobile() { VIN = "111" });
+        }
+
+        [TestMethod]
+        public void InsertAutomobile_ShouldStoreAutomobile()
+        {
+            var expectedAuto = new ElectricAutomobile() { VIN = "1234", Odometer = 234, Make = "make it", Model = "model", Year = 1, BatteryPackWeight = 8 };
+            _repo.InsertAutomobile(expectedAuto);
+
+            var actualAuto = _repo.GetAutomobile(expectedAuto.VIN);
+
+            Assert.IsNotNull(actualAuto);
+            Assert.AreEqual(expectedAuto.VIN, actualAuto.VIN);
+            Assert.AreEqual(expectedAuto.Odometer, actualAuto.Odometer);
+            Assert.AreEqual(expectedAuto.Make, actualAuto.Make);
+            Assert.AreEqual(expectedAuto.Model, actualAuto.Model);
+            Assert.AreEqual(expectedAuto.Year, actualAuto.Year);
+            Assert.AreEqual(expectedAuto.BatteryPackWeight, actualAuto.BatteryPackWeight);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException), "Duplicate VIN is not allowed")]
+        public void InsertAutomobile_ShouldThrowArgumentExcption_GivenAutoWithDuplicateVIN()
+        {
+            var expectedAuto = new ElectricAutomobile() { VIN = "56789" };
+            _repo.InsertAutomobile(expectedAuto);
+            _repo.InsertAutomobile(expectedAuto);
+
+            _repo.GetAutomobile(expectedAuto.VIN);
+        }
+
+        [TestMethod]
+        public void ElectricAutomobileRepository_ShouldRetainListOfAutos_GivenMultipleInstances()
+        {
+            var expectedAuto = new ElectricAutomobile() { VIN = "1111" };
+            _repo.InsertAutomobile(expectedAuto);
+
+            var repo2 = new ElectricAutomobileRepository();
+
+            var actualAuto = repo2.GetAutomobile(expectedAuto.VIN);
+
+            Assert.IsNotNull(actualAuto);
+            Assert.AreEqual(expectedAuto.VIN, actualAuto.VIN);
         }
     }
 }
