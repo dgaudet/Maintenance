@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Maintenance.Vehicle;
 using Maintenance.Vehicle.Models;
+using System.Linq;
 
 namespace Maintenance.Tests.Vehicle
 {
@@ -152,6 +153,19 @@ namespace Maintenance.Tests.Vehicle
             var repo2 = new GasAutomobileRepository();
 
             var actualAuto = repo2.GetAutomobile(expectedAuto.VIN);
+
+            Assert.IsNotNull(actualAuto);
+            Assert.AreEqual(expectedAuto.VIN, actualAuto.VIN);
+        }
+
+        [TestMethod]
+        public void GetAutomobiles_ShouldReturn_InsertedAutomobile()
+        {
+            var expectedAuto = new GasAutomobile() { VIN = "9911" };
+            _repo.InsertAutomobile(expectedAuto);
+
+            var autos = _repo.GetAutomobiles();
+            var actualAuto = autos.FirstOrDefault(a => a.VIN == expectedAuto.VIN);
 
             Assert.IsNotNull(actualAuto);
             Assert.AreEqual(expectedAuto.VIN, actualAuto.VIN);

@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Maintenance.Vehicle;
 using Maintenance.Vehicle.Models;
+using System.Linq;
 
 namespace Maintenance.Tests.Vehicle
 {
@@ -91,7 +92,7 @@ namespace Maintenance.Tests.Vehicle
             Assert.AreEqual(tasks[1].Model, automobile2.Model);
             Assert.AreEqual(tasks[1].Year, automobile2.Year);
             Assert.AreEqual(automobile2.BatteryPackWeight, 435);
-        }
+        }        
 
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentException))]
@@ -150,6 +151,19 @@ namespace Maintenance.Tests.Vehicle
             var repo2 = new ElectricAutomobileRepository();
 
             var actualAuto = repo2.GetAutomobile(expectedAuto.VIN);
+
+            Assert.IsNotNull(actualAuto);
+            Assert.AreEqual(expectedAuto.VIN, actualAuto.VIN);
+        }
+
+        [TestMethod]
+        public void GetAutomobiles_ShouldReturn_InsertedAutomobile()
+        {
+            var expectedAuto = new ElectricAutomobile() { VIN = "9911"};
+            _repo.InsertAutomobile(expectedAuto);
+
+            var autos = _repo.GetAutomobiles();
+            var actualAuto = autos.FirstOrDefault(a => a.VIN == expectedAuto.VIN);
 
             Assert.IsNotNull(actualAuto);
             Assert.AreEqual(expectedAuto.VIN, actualAuto.VIN);

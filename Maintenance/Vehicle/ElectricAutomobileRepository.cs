@@ -27,10 +27,7 @@ namespace Maintenance.Vehicle
 
         public List<ElectricAutomobile> GetAutomobiles()
         {
-            var autos = new List<ElectricAutomobile>();
-            autos.Add(GetAutomobile("OrangeCar1"));
-            autos.Add(GetAutomobile("GreenCar1"));
-            return autos;
+            return _storedAutos;
         }
 
         public void InsertAutomobile(ElectricAutomobile auto)
