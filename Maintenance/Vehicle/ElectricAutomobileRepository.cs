@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Maintenance.Vehicle
 {
-    public class ElectricAutomobileRepository
+    public class ElectricAutomobileRepository : IElectricAutomobileRepository
     {
         public ElectricAutomobile GetAutomobile(int id)
         {

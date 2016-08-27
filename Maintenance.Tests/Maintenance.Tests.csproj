@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Vehicle\ElectricAutomobileRepositoryTest.cs" />
+    <Compile Include="Vehicle\ElectricAutomobileControllerTest.cs" />
     <Compile Include="Vehicle\GasAutomobileRepositoryTest.cs" />
     <Compile Include="Vehicle\GasAutomobileControllerTest.cs" />
     <Compile Include="MaintenanceTask\MaintenanceTaskRepositoryTest.cs" />

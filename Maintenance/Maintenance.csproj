@@ -88,7 +88,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Vehicle\Controllers\ElectricAutomobileController .cs" />
     <Compile Include="Vehicle\ElectricAutomobileRepository.cs" />
+    <Compile Include="Vehicle\IElectricAutomobileRepository.cs" />
     <Compile Include="Vehicle\Models\Automobile.cs" />
     <Compile Include="Vehicle\Controllers\GasAutomobileController.cs" />
     <Compile Include="Vehicle\GasAutomobileRepository.cs" />
