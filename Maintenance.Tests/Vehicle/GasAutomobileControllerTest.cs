@@ -7,6 +7,8 @@ using System.Web.Http;
 using System.Web.Http.Results;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System;
 
 namespace Maintenance.Tests.Vehicle
 {
@@ -97,6 +99,55 @@ namespace Maintenance.Tests.Vehicle
             Assert.IsNotNull(result);
             Assert.AreEqual(1, result.Count());
             Assert.AreEqual(auto, result.First());
+        }
+
+        [TestMethod]
+        public void PutAutomobile_ShouldCallRepository_InsertAutomobileWithCorrectVIN()
+        {
+            var _mockRepo = new Mock<IGasAutomobileRepository>();
+            var controller = new GasAutomobileController(_mockRepo.Object);
+            var newAuto = new GasAutomobile() { VIN = "123" };
+
+            controller.PutAutomobile(newAuto);
+
+            _mockRepo.Verify(m => m.InsertAutomobile(newAuto));
+        }
+
+        [TestMethod]
+        public void PutAutomobile_ShouldReturnBadRequest_GivenNull()
+        {
+            var controller = new GasAutomobileController(_mockRepo.Object);
+            _mockRepo.Setup(a => a.InsertAutomobile(It.IsAny<GasAutomobile>())).Throws(new Exception("should not be called"));
+
+            IHttpActionResult result = controller.PutAutomobile(null);
+
+            Assert.IsInstanceOfType(result, typeof(BadRequestResult));
+        }
+
+        [TestMethod]
+        public void PutAutomobile_ShouldReturnExceptionRequest_GivenRepositoryThrows()
+        {
+            var controller = new GasAutomobileController(_mockRepo.Object);
+            _mockRepo.Setup(a => a.InsertAutomobile(It.IsAny<GasAutomobile>())).Throws(new Exception("boom"));
+
+            IHttpActionResult result = controller.PutAutomobile(new GasAutomobile());
+
+            Assert.IsInstanceOfType(result, typeof(ExceptionResult));
+        }
+
+        [TestMethod]
+        public void PutAutomobile_ShouldReturnContentResult_GivenAutoSaved()
+        {
+            var expectedAuto = new GasAutomobile() { VIN = "1" };
+            var controller = new GasAutomobileController(_mockRepo.Object);
+
+            IHttpActionResult actionResult = controller.PutAutomobile(expectedAuto);
+            var result = actionResult as NegotiatedContentResult<GasAutomobile>;
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(HttpStatusCode.Accepted, result.StatusCode);
+            Assert.IsNotNull(result.Content);
+            Assert.AreEqual(expectedAuto.VIN, result.Content.VIN);
         }
     }
 }
