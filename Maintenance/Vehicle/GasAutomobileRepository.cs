@@ -7,12 +7,15 @@ namespace Maintenance.Vehicle
 {
     public class GasAutomobileRepository : IGasAutomobileRepository
     {
-        List<GasAutomobile> _storedAutos;
+        static List<GasAutomobile> _storedAutos;
         public GasAutomobileRepository()
         {
-            _storedAutos = new List<GasAutomobile>();
-            _storedAutos.Add(new GasAutomobile() { VIN = "RedCar1", Odometer = 5000, Make = "Nissan", Model = "Murano", Year = 2011, NumberOfSparkPlugs = 6 });
-            _storedAutos.Add(new GasAutomobile() { VIN = "BlueCar1", Odometer = 15000, Make = "Nissan", Model = "Frontier", Year = 2006, NumberOfSparkPlugs = 8 });
+            if (_storedAutos == null)
+            {
+                _storedAutos = new List<GasAutomobile>();
+                InsertAutomobile(new GasAutomobile() { VIN = "RedCar1", Odometer = 5000, Make = "Nissan", Model = "Murano", Year = 2011, NumberOfSparkPlugs = 6 });
+                InsertAutomobile(new GasAutomobile() { VIN = "BlueCar1", Odometer = 15000, Make = "Nissan", Model = "Frontier", Year = 2006, NumberOfSparkPlugs = 8 });
+            }
         }
 
         public GasAutomobile GetAutomobile(string VIN)

@@ -65,7 +65,7 @@ namespace Maintenance.Tests.Vehicle
         {
             var autos = _repo.GetAutomobiles();
             Assert.IsNotNull(autos);
-            Assert.AreEqual(autos.Count, 2);
+            Assert.IsTrue(autos.Count > 1);
         }
 
         [TestMethod]

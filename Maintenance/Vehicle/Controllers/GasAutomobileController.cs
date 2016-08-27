@@ -12,7 +12,7 @@ namespace Maintenance.Vehicle.Controllers
 
         public GasAutomobileController()
         {
-            _repository = IGasAutomobileRepositoryFactory.CreateSharedRepo();
+            _repository = new GasAutomobileRepository();
         }
 
         public GasAutomobileController(IGasAutomobileRepository repository)

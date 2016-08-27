@@ -66,7 +66,7 @@ namespace Maintenance.Tests.Vehicle
         {
             var autos = _repo.GetAutomobiles();
             Assert.IsNotNull(autos);
-            Assert.AreEqual(autos.Count, 2);
+            Assert.IsTrue(autos.Count > 1);
         }
 
         [TestMethod]
@@ -136,11 +136,25 @@ namespace Maintenance.Tests.Vehicle
         [ExpectedException(typeof(System.ArgumentException), "Duplicate VIN is not allowed")]
         public void InsertAutomobile_ShouldThrowArgumentExcption_GivenAutoWithDuplicateVIN()
         {
-            var expectedAuto = new GasAutomobile() { VIN = "1234" };
+            var expectedAuto = new GasAutomobile() { VIN = "5555" };
             _repo.InsertAutomobile(expectedAuto);
             _repo.InsertAutomobile(expectedAuto);
 
             _repo.GetAutomobile(expectedAuto.VIN);
+        }
+
+        [TestMethod]
+        public void ElectricAutomobileRepository_ShouldRetainListOfAutos_GivenMultipleInstances()
+        {
+            var expectedAuto = new GasAutomobile() { VIN = "1111" };
+            _repo.InsertAutomobile(expectedAuto);
+
+            var repo2 = new GasAutomobileRepository();
+
+            var actualAuto = repo2.GetAutomobile(expectedAuto.VIN);
+
+            Assert.IsNotNull(actualAuto);
+            Assert.AreEqual(expectedAuto.VIN, actualAuto.VIN);
         }
     }
 }

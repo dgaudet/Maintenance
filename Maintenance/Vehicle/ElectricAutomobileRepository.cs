@@ -14,9 +14,9 @@ namespace Maintenance.Vehicle
             if (_storedAutos == null)
             {
                 _storedAutos = new List<ElectricAutomobile>();
+                InsertAutomobile(new ElectricAutomobile() { VIN = "OrangeCar1", Odometer = 3000, Make = "Tesla", Model = "Roadster", Year = 2011, BatteryPackWeight = 2877 });
+                InsertAutomobile(new ElectricAutomobile() { VIN = "GreenCar1", Odometer = 15000, Make = "Chevy", Model = "Volt", Year = 2012, BatteryPackWeight = 435 });
             }
-            _storedAutos.Add(new ElectricAutomobile() { VIN = "OrangeCar1", Odometer = 3000, Make = "Tesla", Model = "Roadster", Year = 2011, BatteryPackWeight = 2877 });
-            _storedAutos.Add(new ElectricAutomobile() { VIN = "GreenCar1", Odometer = 15000, Make = "Chevy", Model = "Volt", Year = 2012, BatteryPackWeight = 435 });
         }
 
         public ElectricAutomobile GetAutomobile(string vin)
