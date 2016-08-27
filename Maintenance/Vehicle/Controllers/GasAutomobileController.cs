@@ -4,16 +4,16 @@ using System.Web.Http;
 
 namespace Maintenance.Vehicle.Controllers
 {
-    public class AutomobileController : ApiController
+    public class GasAutomobileController : ApiController
     {
-        private IAutomobileRepository _repository;
+        private IGasAutomobileRepository _repository;
 
-        public AutomobileController()
+        public GasAutomobileController()
         {
-            _repository = new AutomobileRepository();
+            _repository = new GasAutomobileRepository();
         }
 
-        public AutomobileController(IAutomobileRepository repository)
+        public GasAutomobileController(IGasAutomobileRepository repository)
         {
             _repository = repository;
         }

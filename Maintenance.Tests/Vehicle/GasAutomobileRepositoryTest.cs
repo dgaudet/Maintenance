@@ -4,13 +4,13 @@ using Maintenance.Vehicle;
 namespace Maintenance.Tests.Vehicle
 {
     [TestClass]
-    public class AutomobileRepositoryTest
+    public class GasAutomobileRepositoryTest
     {
-        AutomobileRepository _repo;
+        GasAutomobileRepository _repo;
 
-        public AutomobileRepositoryTest()
+        public GasAutomobileRepositoryTest()
         {
-            _repo = new AutomobileRepository();
+            _repo = new GasAutomobileRepository();
         }
 
         [TestMethod]
@@ -30,6 +30,7 @@ namespace Maintenance.Tests.Vehicle
             Assert.AreEqual(auto.Make, "Nissan");
             Assert.AreEqual(auto.Model, "Murano");
             Assert.AreEqual(auto.Year, 2011);
+            Assert.AreEqual(auto.NumberOfSparkPlugs, 6);
         }
 
         [TestMethod]
@@ -43,6 +44,7 @@ namespace Maintenance.Tests.Vehicle
             Assert.AreEqual(auto.Make, "Nissan");
             Assert.AreEqual(auto.Model, "Frontier");
             Assert.AreEqual(auto.Year, 2006);
+            Assert.AreEqual(auto.NumberOfSparkPlugs, 8);
         }
 
         [TestMethod]
@@ -66,6 +68,7 @@ namespace Maintenance.Tests.Vehicle
             Assert.AreEqual(tasks[0].Make, automobile1.Make);
             Assert.AreEqual(tasks[0].Model, automobile1.Model);
             Assert.AreEqual(tasks[0].Year, automobile1.Year);
+            Assert.AreEqual(automobile1.NumberOfSparkPlugs, 6);
 
             var automobile2 = _repo.GetAutomobile(2);
             Assert.IsNotNull(automobile2);
@@ -75,6 +78,7 @@ namespace Maintenance.Tests.Vehicle
             Assert.AreEqual(tasks[1].Make, automobile2.Make);
             Assert.AreEqual(tasks[1].Model, automobile2.Model);
             Assert.AreEqual(tasks[1].Year, automobile2.Year);
+            Assert.AreEqual(automobile2.NumberOfSparkPlugs, 8);
         }
     }
 }

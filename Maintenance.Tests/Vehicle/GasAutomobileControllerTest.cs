@@ -11,20 +11,20 @@ using System.Linq;
 namespace Maintenance.Tests.Vehicle
 {
     [TestClass]
-    public class AutomobileControllerTest
+    public class GasAutomobileControllerTest
     {
-        Mock<IAutomobileRepository> _mockRepo;
+        Mock<IGasAutomobileRepository> _mockRepo;
 
-        public AutomobileControllerTest()
+        public GasAutomobileControllerTest()
         {
-            _mockRepo = new Mock<IAutomobileRepository>();
+            _mockRepo = new Mock<IGasAutomobileRepository>();
         }
 
         [TestMethod]
         public void GetAutomobile_ShouldCallRepository_GetAutomobileWithCorrectId()
         {
-            var _mockRepo = new Mock<IAutomobileRepository>();
-            var controller = new AutomobileController(_mockRepo.Object);
+            var _mockRepo = new Mock<IGasAutomobileRepository>();
+            var controller = new GasAutomobileController(_mockRepo.Object);
             var id = 1;
 
             controller.GetAutomobile(id);
@@ -35,9 +35,9 @@ namespace Maintenance.Tests.Vehicle
         [TestMethod]
         public void GetAutomobile_ShouldReturnNotFound_GivenNoAutoReturnedFromRepo()
         {
-            var controller = new AutomobileController(_mockRepo.Object);
+            var controller = new GasAutomobileController(_mockRepo.Object);
             var id = 1;
-            _mockRepo.Setup(m => m.GetAutomobile(id)).Returns((Automobile)null);
+            _mockRepo.Setup(m => m.GetAutomobile(id)).Returns((GasAutomobile)null);
 
             IHttpActionResult result = controller.GetAutomobile(id);
 
@@ -48,12 +48,12 @@ namespace Maintenance.Tests.Vehicle
         public void GetAutomobile_ShouldReturnAuto_GivenAutoReturnedFromRepo()
         {
             var id = 1;
-            var auto = new Automobile() { Id = id };
-            var controller = new AutomobileController(_mockRepo.Object);
+            var auto = new GasAutomobile() { Id = id };
+            var controller = new GasAutomobileController(_mockRepo.Object);
             _mockRepo.Setup(m => m.GetAutomobile(id)).Returns(auto);
 
             IHttpActionResult actionResult = controller.GetAutomobile(id);
-            var result = actionResult as OkNegotiatedContentResult<Automobile>;
+            var result = actionResult as OkNegotiatedContentResult<GasAutomobile>;
 
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Content);
@@ -63,7 +63,7 @@ namespace Maintenance.Tests.Vehicle
         [TestMethod]
         public void GetAllAutomobiles_ShouldCallRepositoryGetAutomobiles()
         {
-            var controller = new AutomobileController(_mockRepo.Object);
+            var controller = new GasAutomobileController(_mockRepo.Object);
 
             controller.GetAllAutomobiles();
 
@@ -73,8 +73,8 @@ namespace Maintenance.Tests.Vehicle
         [TestMethod]
         public void GetAllAutomobiles_ShouldReturnEmptyList_GivenNoAutosReturnedFromRepo()
         {
-            var controller = new AutomobileController(_mockRepo.Object);
-            _mockRepo.Setup(m => m.GetAutomobiles()).Returns((List<Automobile>)null);
+            var controller = new GasAutomobileController(_mockRepo.Object);
+            _mockRepo.Setup(m => m.GetAutomobiles()).Returns((List<GasAutomobile>)null);
 
             var result = controller.GetAllAutomobiles();
 
@@ -86,10 +86,10 @@ namespace Maintenance.Tests.Vehicle
         public void GetAllAutomobiles_ShouldReturnTask_GivenAutosReturnedFromRepo()
         {
             var id = 1;
-            var auto = new Automobile() { Id = id };
-            var tasks = new List<Automobile>();
+            var auto = new GasAutomobile() { Id = id };
+            var tasks = new List<GasAutomobile>();
             tasks.Add(auto);
-            var controller = new AutomobileController(_mockRepo.Object);
+            var controller = new GasAutomobileController(_mockRepo.Object);
             _mockRepo.Setup(m => m.GetAutomobiles()).Returns(tasks);
 
             var result = controller.GetAllAutomobiles();
