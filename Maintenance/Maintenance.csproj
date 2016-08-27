@@ -88,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Vehicle\ElectricAutomobileRepository.cs" />
     <Compile Include="Vehicle\Models\Automobile.cs" />
     <Compile Include="Vehicle\Controllers\GasAutomobileController.cs" />
     <Compile Include="Vehicle\GasAutomobileRepository.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="MaintenanceTask\MaintenanceTaskRepository.cs" />
     <Compile Include="MaintenanceTask\Models\MaintenanceTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Vehicle\Models\ElectricAutomobile.cs" />
     <Compile Include="Vehicle\Models\GasAutomobile.cs" />
   </ItemGroup>
   <ItemGroup>
