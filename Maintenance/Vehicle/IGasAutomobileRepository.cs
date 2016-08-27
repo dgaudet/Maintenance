@@ -5,7 +5,8 @@ namespace Maintenance.Vehicle
 {
     public interface IGasAutomobileRepository
     {
-        GasAutomobile GetAutomobile(int id);
         List<GasAutomobile> GetAutomobiles();
+        GasAutomobile GetAutomobile(string VIN);
+        void InsertAutomobile(GasAutomobile auto);
     }
 }

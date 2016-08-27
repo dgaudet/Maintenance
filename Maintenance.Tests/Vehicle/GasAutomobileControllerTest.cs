@@ -21,25 +21,25 @@ namespace Maintenance.Tests.Vehicle
         }
 
         [TestMethod]
-        public void GetAutomobile_ShouldCallRepository_GetAutomobileWithCorrectId()
+        public void GetAutomobile_ShouldCallRepository_GetAutomobileWithCorrectVIN()
         {
             var _mockRepo = new Mock<IGasAutomobileRepository>();
             var controller = new GasAutomobileController(_mockRepo.Object);
-            var id = 1;
+            var VIN = "123";
 
-            controller.GetAutomobile(id);
+            controller.GetAutomobile(VIN);
 
-            _mockRepo.Verify(m => m.GetAutomobile(id));
+            _mockRepo.Verify(m => m.GetAutomobile(VIN));
         }
 
         [TestMethod]
         public void GetAutomobile_ShouldReturnNotFound_GivenNoAutoReturnedFromRepo()
         {
             var controller = new GasAutomobileController(_mockRepo.Object);
-            var id = 1;
-            _mockRepo.Setup(m => m.GetAutomobile(id)).Returns((GasAutomobile)null);
+            var vin = "1";
+            _mockRepo.Setup(m => m.GetAutomobile(vin)).Returns((GasAutomobile)null);
 
-            IHttpActionResult result = controller.GetAutomobile(id);
+            IHttpActionResult result = controller.GetAutomobile(vin);
 
             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
@@ -47,12 +47,12 @@ namespace Maintenance.Tests.Vehicle
         [TestMethod]
         public void GetAutomobile_ShouldReturnAuto_GivenAutoReturnedFromRepo()
         {
-            var id = 1;
-            var auto = new GasAutomobile() { Id = id };
+            var vin = "1";
+            var auto = new GasAutomobile() { VIN = vin };
             var controller = new GasAutomobileController(_mockRepo.Object);
-            _mockRepo.Setup(m => m.GetAutomobile(id)).Returns(auto);
+            _mockRepo.Setup(m => m.GetAutomobile(vin)).Returns(auto);
 
-            IHttpActionResult actionResult = controller.GetAutomobile(id);
+            IHttpActionResult actionResult = controller.GetAutomobile(vin);
             var result = actionResult as OkNegotiatedContentResult<GasAutomobile>;
 
             Assert.IsNotNull(result);
@@ -85,8 +85,8 @@ namespace Maintenance.Tests.Vehicle
         [TestMethod]
         public void GetAllAutomobiles_ShouldReturnTask_GivenAutosReturnedFromRepo()
         {
-            var id = 1;
-            var auto = new GasAutomobile() { Id = id };
+            var vin = "1";
+            var auto = new GasAutomobile() { VIN = vin };
             var tasks = new List<GasAutomobile>();
             tasks.Add(auto);
             var controller = new GasAutomobileController(_mockRepo.Object);

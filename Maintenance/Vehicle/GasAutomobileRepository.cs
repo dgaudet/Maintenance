@@ -1,29 +1,42 @@
 ﻿using Maintenance.Vehicle.Models;
 using System.Collections.Generic;
+using System;
+using System.Linq;
 
 namespace Maintenance.Vehicle
 {
     public class GasAutomobileRepository : IGasAutomobileRepository
     {
-        public GasAutomobile GetAutomobile(int id)
+        List<GasAutomobile> _storedAutos;
+        public GasAutomobileRepository()
         {
-            if (id == 1)
-            {
-                return new GasAutomobile() { Id = 1, VIN = "RedCar1", Odometer = 5000, Make = "Nissan", Model = "Murano", Year = 2011, NumberOfSparkPlugs = 6 };
-            }
-            if (id == 2)
-            {
-                return new GasAutomobile() { Id = 2, VIN = "BlueCar1", Odometer = 15000, Make = "Nissan", Model = "Frontier", Year = 2006, NumberOfSparkPlugs = 8 };
-            }
-            return null;
+            _storedAutos = new List<GasAutomobile>();
+            _storedAutos.Add(new GasAutomobile() { Id = 1, VIN = "RedCar1", Odometer = 5000, Make = "Nissan", Model = "Murano", Year = 2011, NumberOfSparkPlugs = 6 });
+            _storedAutos.Add(new GasAutomobile() { Id = 2, VIN = "BlueCar1", Odometer = 15000, Make = "Nissan", Model = "Frontier", Year = 2006, NumberOfSparkPlugs = 8 });
+        }
+
+        public GasAutomobile GetAutomobile(string VIN)
+        {
+            return _storedAutos.FirstOrDefault(x => x.VIN == VIN);
         }
 
         public List<GasAutomobile> GetAutomobiles()
         {
-            var autos = new List<GasAutomobile>();
-            autos.Add(GetAutomobile(1));
-            autos.Add(GetAutomobile(2));
-            return autos;
+            return _storedAutos;
+        }
+
+        public void InsertAutomobile(GasAutomobile auto)
+        {
+            if (auto == null || auto.VIN == null)
+            {
+                throw new ArgumentException();
+            }
+            var existingAuto = GetAutomobile(auto.VIN);
+            if (existingAuto != null)
+            {
+                throw new ArgumentException("Duplicate VIN is not allowed");
+            }
+            _storedAutos.Add(auto);
         }
     }
 }

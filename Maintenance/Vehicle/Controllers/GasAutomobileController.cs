@@ -18,9 +18,9 @@ namespace Maintenance.Vehicle.Controllers
             _repository = repository;
         }
 
-        public IHttpActionResult GetAutomobile(int id)
+        public IHttpActionResult GetAutomobile(string VIN)
         {
-            var auto = _repository.GetAutomobile(id);
+            var auto = _repository.GetAutomobile(VIN);
             if (auto == null)
             {
                 return NotFound();

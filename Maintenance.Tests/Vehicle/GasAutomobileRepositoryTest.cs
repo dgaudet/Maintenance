@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Maintenance.Vehicle;
+using Maintenance.Vehicle.Models;
 
 namespace Maintenance.Tests.Vehicle
 {
@@ -14,37 +15,40 @@ namespace Maintenance.Tests.Vehicle
         }
 
         [TestMethod]
-        public void GetAutomobile_ShouldReturnNull_GivenNonExistingId()
+        public void GetAutomobile_ShouldReturnNull_GivenNonExistingVIN()
         {
-            Assert.IsNull(_repo.GetAutomobile(0));
+            Assert.IsNull(_repo.GetAutomobile("non existing vin"));
         }
 
         [TestMethod]
-        public void GetAutomobile_ShouldReturnCorrectAutomobile_GivenExistingId1()
+        public void GetAutomobile_ShouldReturnCorrectAutomobile_GivenExistingVIN1()
         {
-            var auto = _repo.GetAutomobile(1);
+            var vin = "RedCar1";
+
+            var auto = _repo.GetAutomobile(vin);
+
             Assert.IsNotNull(auto);
-            Assert.AreEqual(auto.Id, 1);
-            Assert.AreEqual(auto.VIN, "RedCar1");
-            Assert.AreEqual(auto.Odometer, 5000);
-            Assert.AreEqual(auto.Make, "Nissan");
-            Assert.AreEqual(auto.Model, "Murano");
-            Assert.AreEqual(auto.Year, 2011);
-            Assert.AreEqual(auto.NumberOfSparkPlugs, 6);
+            Assert.AreEqual(vin, auto.VIN);
+            Assert.AreEqual(5000, auto.Odometer);
+            Assert.AreEqual("Nissan", auto.Make);
+            Assert.AreEqual("Murano", auto.Model);
+            Assert.AreEqual(2011, auto.Year);
+            Assert.AreEqual(6, auto.NumberOfSparkPlugs);
         }
 
         [TestMethod]
-        public void GetAutomobile_ShouldReturnCorrectAutomobile_GivenExistingId2()
+        public void GetAutomobile_ShouldReturnCorrectAutomobile_GivenExistingVIN2()
         {
-            var auto = _repo.GetAutomobile(2);
+            var vin = "BlueCar1";
+
+            var auto = _repo.GetAutomobile(vin);
+
             Assert.IsNotNull(auto);
-            Assert.AreEqual(auto.Id, 2);
-            Assert.AreEqual(auto.VIN, "BlueCar1");
-            Assert.AreEqual(auto.Odometer, 15000);
-            Assert.AreEqual(auto.Make, "Nissan");
-            Assert.AreEqual(auto.Model, "Frontier");
-            Assert.AreEqual(auto.Year, 2006);
-            Assert.AreEqual(auto.NumberOfSparkPlugs, 8);
+            Assert.AreEqual(vin, auto.VIN);
+            Assert.AreEqual("Nissan", auto.Make);
+            Assert.AreEqual("Frontier", auto.Model);
+            Assert.AreEqual(2006, auto.Year);
+            Assert.AreEqual(8, auto.NumberOfSparkPlugs);
         }
 
         [TestMethod]
@@ -59,10 +63,11 @@ namespace Maintenance.Tests.Vehicle
         public void GetAutomobiles_ShouldReturnTheSameAutosAsGetAutomobile()
         {
             var tasks = _repo.GetAutomobiles();
+
             Assert.IsNotNull(tasks);
-            var automobile1 = _repo.GetAutomobile(1);
+
+            var automobile1 = _repo.GetAutomobile("RedCar1");
             Assert.IsNotNull(automobile1);
-            Assert.AreEqual(tasks[0].Id, automobile1.Id);
             Assert.AreEqual(tasks[0].VIN, automobile1.VIN);
             Assert.AreEqual(tasks[0].Odometer, automobile1.Odometer);
             Assert.AreEqual(tasks[0].Make, automobile1.Make);
@@ -70,15 +75,63 @@ namespace Maintenance.Tests.Vehicle
             Assert.AreEqual(tasks[0].Year, automobile1.Year);
             Assert.AreEqual(automobile1.NumberOfSparkPlugs, 6);
 
-            var automobile2 = _repo.GetAutomobile(2);
+            var automobile2 = _repo.GetAutomobile("BlueCar1");
             Assert.IsNotNull(automobile2);
-            Assert.AreEqual(tasks[1].Id, automobile2.Id);
             Assert.AreEqual(tasks[1].VIN, automobile2.VIN);
             Assert.AreEqual(tasks[1].Odometer, automobile2.Odometer);
             Assert.AreEqual(tasks[1].Make, automobile2.Make);
             Assert.AreEqual(tasks[1].Model, automobile2.Model);
             Assert.AreEqual(tasks[1].Year, automobile2.Year);
             Assert.AreEqual(automobile2.NumberOfSparkPlugs, 8);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void InsertAutomobile_ShouldThrowArugumentException_GivenNull()
+        {
+            _repo.InsertAutomobile(null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void InsertAutomobile_ShouldThrowArugumentException_GivenAutoWithNullVIN()
+        {
+            _repo.InsertAutomobile(new GasAutomobile());
+        }
+
+        [TestMethod]
+        public void InsertAutomobile_ShouldAllowInsertingAutomobile()
+        {
+            _repo.InsertAutomobile(new GasAutomobile() { VIN = "111" });
+        }
+
+        [TestMethod]
+        public void InsertAutomobile_ShouldStoreAutomobile()
+        {
+            var expectedAuto = new GasAutomobile() { VIN ="1234", Odometer = 234, Make = "make it", Model = "model", Year = 1, NumberOfSparkPlugs = 8 };
+            _repo.InsertAutomobile(expectedAuto);
+
+            var actualAuto = _repo.GetAutomobile(expectedAuto.VIN);
+
+            Assert.IsNotNull(actualAuto);
+            Assert.AreEqual(expectedAuto.Id, actualAuto.Id);
+            Assert.AreEqual(expectedAuto.VIN, actualAuto.VIN);
+            Assert.AreEqual(expectedAuto.Odometer, actualAuto.Odometer);
+            Assert.AreEqual(expectedAuto.Make, actualAuto.Make);
+            Assert.AreEqual(expectedAuto.Model, actualAuto.Model);
+            Assert.AreEqual(expectedAuto.Year, actualAuto.Year);
+            Assert.AreEqual(expectedAuto.NumberOfSparkPlugs, actualAuto.NumberOfSparkPlugs);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException), "Duplicate VIN is not allowed")]
+        public void InsertAutomobile_ShouldThrowArgumentExcption_GivenAutoWithDuplicateVIN()
+        {
+            var expectedAuto = new GasAutomobile() { VIN = "1234" };
+            _repo.InsertAutomobile(expectedAuto);
+            _repo.InsertAutomobile(expectedAuto);
+
+            _repo.GetAutomobile(expectedAuto.VIN);
         }
     }
 }
