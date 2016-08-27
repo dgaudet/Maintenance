@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Maintenance;
 
 namespace Maintenance.Tests.MaintenanceTask
 {
