@@ -28,12 +28,12 @@ namespace Maintenance.Vehicle.Controllers
             return Ok(auto);
         }
 
-        public IEnumerable<Automobile> GetAllAutomobiles()
+        public IEnumerable<ElectricAutomobile> GetAllAutomobiles()
         {
             var autos = _repository.GetAutomobiles();
             if (autos == null)
             {
-                return new List<Automobile>();
+                return new List<ElectricAutomobile>();
             }
             return autos;
         }
