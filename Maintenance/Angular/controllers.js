@@ -30,4 +30,14 @@
     };
 
     $scope.loadTask(); // Load a task which can be edited on UI
+}).controller('GasAutomobileListController', function ($scope, $state, $window, GasAutomobile) {
+    $scope.gasAutomobiles = GasAutomobile.query();
+}).controller('GasAutomobileCreateController', function ($scope, $state, $stateParams, GasAutomobile) {
+    $scope.gasAutomobile = new GasAutomobile();  //create new task instance. Properties will be set via ng-model on UI
+
+    $scope.addGasAutomobile = function () { //create a new task. Issues a POST to /api/tasks
+        $scope.gasAutomobile.$save(function () {
+            $state.go('gasAutomobiles'); // on success go back to home i.e. tasks state.
+        });
+    };
 });

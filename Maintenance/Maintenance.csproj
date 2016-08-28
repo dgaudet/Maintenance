@@ -84,11 +84,14 @@
     <Content Include="Angular\app.js" />
     <Content Include="Angular\controllers.js" />
     <Content Include="Angular\Index.html" />
+    <Content Include="Angular\Partials\gasautomobile-add.html" />
     <Content Include="Angular\Partials\task-add.html" />
     <Content Include="Angular\Partials\task-edit.html" />
     <Content Include="Angular\Partials\task-view.html" />
+    <Content Include="Angular\Partials\gasautomobiles.html" />
     <Content Include="Angular\Partials\tasks.html" />
     <Content Include="Angular\Partials\_form.html" />
+    <Content Include="Angular\Partials\_gasAutomobileForm.html" />
     <Content Include="Angular\services.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />

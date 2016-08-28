@@ -17,7 +17,15 @@ angular.module('maintenanceApp').config(function ($stateProvider) {
         url: '/maintenancetask/:id',
         templateUrl: 'Angular/partials/task-edit.html',
         controller: 'TaskEditController'
+    }).state('gasAutomobiles', { // state for showing all tasks
+        url: '/gasautomobile',
+        templateUrl: 'Angular/partials/gasautomobiles.html',
+        controller: 'GasAutomobileListController'
+    }).state('newGasAutomobile', { //state for adding a new movie
+        url: '/gasautomobile',
+        templateUrl: 'Angular/partials/gasautomobile-add.html',
+        controller: 'GasAutomobileCreateController'
     });
 }).run(function ($state) {
-    $state.go('tasks'); //make a transition to movies state when app starts
+    $state.go('gasAutomobiles'); //make a transition to movies state when app starts
 });

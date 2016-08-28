@@ -40,7 +40,7 @@ namespace Maintenance.Vehicle.Controllers
             return autos;
         }
 
-        public IHttpActionResult PutAutomobile(GasAutomobile newAuto)
+        public IHttpActionResult PostAutomobile(GasAutomobile newAuto)
         {
             if (newAuto == null)
             {
