@@ -1,0 +1,25 @@
+﻿<table class="table tasktable">
+    <tr>
+        <td><h3>Details for Task Id:{{task.Id}}</h3></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>For VIN</td>
+        <td>{{task.VIN}}</td>
+    </tr>
+    <tr>
+        <td>Task Name</td>
+        <td>{{task.Name}}</td>
+    </tr>
+    <tr>
+        <td>Task Date</td>
+        <td>{{task.Date | date:'MM/dd/yyyy'}}</td>
+    </tr>
+    <tr>
+        <td>Odometer Reading</td>
+        <td>{{task.Odometer}}</td>
+    </tr>
+</table>
+<div>
+    <a class="btn btn-primary" ui-sref="editTask({id:task.id})">Edit</a>
+</div>
