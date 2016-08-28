@@ -40,4 +40,6 @@
             $state.go('gasAutomobiles'); // on success go back to home i.e. tasks state.
         });
     };
+}).controller('GasAutomobileViewController', function ($scope, $stateParams, GasAutomobile) {
+    $scope.gasAutomobile = GasAutomobile.get({ id: $stateParams.id });
 });

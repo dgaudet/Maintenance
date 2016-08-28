@@ -25,6 +25,10 @@ angular.module('maintenanceApp').config(function ($stateProvider) {
         url: '/gasautomobile',
         templateUrl: 'Angular/partials/gasautomobile-add.html',
         controller: 'GasAutomobileCreateController'
+    }).state('viewGasAutomobile', { //state for showing single task
+        url: '/gasAutomobile/:id',
+        templateUrl: 'Angular/partials/gasAutomobile-view.html',
+        controller: 'GasAutomobileViewController'
     });
 }).run(function ($state) {
     $state.go('gasAutomobiles'); //make a transition to movies state when app starts
