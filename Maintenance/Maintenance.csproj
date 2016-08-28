@@ -95,13 +95,13 @@
     <Compile Include="Vehicle\Controllers\GasAutomobileController.cs" />
     <Compile Include="Vehicle\GasAutomobileRepository.cs" />
     <Compile Include="Vehicle\IGasAutomobileRepository.cs" />
-    <Compile Include="MaintenanceTask\Controllers\MaintenanceTaskController.cs" />
+    <Compile Include="Task\Controllers\MaintenanceTaskController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="MaintenanceTask\IMaintenanceTaskRepository.cs" />
-    <Compile Include="MaintenanceTask\MaintenanceTaskRepository.cs" />
-    <Compile Include="MaintenanceTask\Models\MaintenanceTask.cs" />
+    <Compile Include="Task\IMaintenanceTaskRepository.cs" />
+    <Compile Include="Task\MaintenanceTaskRepository.cs" />
+    <Compile Include="Task\Models\MaintenanceTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Vehicle\Models\ElectricAutomobile.cs" />
     <Compile Include="Vehicle\Models\GasAutomobile.cs" />

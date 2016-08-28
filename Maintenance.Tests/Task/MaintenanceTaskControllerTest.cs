@@ -6,7 +6,7 @@ using System.Web.Http;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Maintenance.Tests.MaintenanceTask
+namespace Maintenance.Tests.Task
 {
     [TestClass]
     public class MaintenanceTaskControllerTest

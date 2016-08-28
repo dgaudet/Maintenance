@@ -8,5 +8,6 @@ namespace Maintenance.Models
         public string Name { get; set; }
         public DateTime Date { get; set; }
         public long Odometer { get; set; }
+        public string VIN { get; set; }
     }
 }

@@ -145,7 +145,7 @@ namespace Maintenance.Tests.Vehicle
         }
 
         [TestMethod]
-        public void ElectricAutomobileRepository_ShouldRetainListOfAutos_GivenMultipleInstances()
+        public void GasAutomobileRepository_ShouldRetainListOfAutos_GivenMultipleInstances()
         {
             var expectedAuto = new GasAutomobile() { VIN = "1111" };
             _repo.InsertAutomobile(expectedAuto);

@@ -63,8 +63,8 @@
     <Compile Include="Vehicle\ElectricAutomobileControllerTest.cs" />
     <Compile Include="Vehicle\GasAutomobileRepositoryTest.cs" />
     <Compile Include="Vehicle\GasAutomobileControllerTest.cs" />
-    <Compile Include="MaintenanceTask\MaintenanceTaskRepositoryTest.cs" />
-    <Compile Include="MaintenanceTask\MaintenanceTaskControllerTest.cs" />
+    <Compile Include="Task\MaintenanceTaskRepositoryTest.cs" />
+    <Compile Include="Task\MaintenanceTaskControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
