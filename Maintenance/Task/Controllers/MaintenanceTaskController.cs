@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web.Http;
 using Maintenance.Models;
 using System.Net;
+using System.Linq;
 
 namespace Maintenance.Controllers
 {
@@ -54,6 +55,16 @@ namespace Maintenance.Controllers
                 return InternalServerError(e);
             }
             return Content(HttpStatusCode.Accepted, newTask);
+        }
+
+        public IEnumerable<MaintenanceTask> GetMaintenanceTasks(string vin)
+        {
+            var tasks = _repository.GetMaintenanceTasks(vin).ToList();
+            if (tasks.Count == 0)
+            {
+                return new List<MaintenanceTask>();
+            }
+            return tasks;
         }
     }
 }

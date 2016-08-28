@@ -37,7 +37,7 @@ namespace Maintenance.Tests.Task
         {
             var controller = new MaintenanceTaskController(_mockRepo.Object);
             var id = 1;
-            _mockRepo.Setup(m => m.GetTask(id)).Returns((Models.MaintenanceTask)null);
+            _mockRepo.Setup(m => m.GetTask(id)).Returns((MaintenanceTask)null);
 
             IHttpActionResult result = controller.GetMaintenanceTask(id);
 
@@ -48,12 +48,12 @@ namespace Maintenance.Tests.Task
         public void GetMaintenanceTask_ShouldReturnTask_GivenTaskReturnedFromRepo()
         {
             var id = 1;
-            var task = new Models.MaintenanceTask() { Id = id};
+            var task = new MaintenanceTask() { Id = id};
             var controller = new MaintenanceTaskController(_mockRepo.Object);
             _mockRepo.Setup(m => m.GetTask(id)).Returns(task);
 
             IHttpActionResult actionResult = controller.GetMaintenanceTask(id);
-            var result = actionResult as OkNegotiatedContentResult<Models.MaintenanceTask>;
+            var result = actionResult as OkNegotiatedContentResult<MaintenanceTask>;
 
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Content);
@@ -74,7 +74,7 @@ namespace Maintenance.Tests.Task
         public void GetAllMaintenanceTasks_ShouldReturnEmptyList_GivenNoTasksReturnedFromRepo()
         {
             var controller = new MaintenanceTaskController(_mockRepo.Object);
-            _mockRepo.Setup(m => m.GetMaintenanceTasks()).Returns((List<Models.MaintenanceTask>)null);
+            _mockRepo.Setup(m => m.GetMaintenanceTasks()).Returns((List<MaintenanceTask>)null);
 
             var result = controller.GetAllMaintenanceTasks();
 
@@ -86,8 +86,8 @@ namespace Maintenance.Tests.Task
         public void GetAllMaintenanceTasks_ShouldReturnTask_GivenTaskReturnedFromRepo()
         {
             var id = 1;
-            var task = new Models.MaintenanceTask() { Id = id };
-            var tasks = new List<Models.MaintenanceTask>();
+            var task = new MaintenanceTask() { Id = id };
+            var tasks = new List<MaintenanceTask>();
             tasks.Add(task);
             var controller = new MaintenanceTaskController(_mockRepo.Object);
             _mockRepo.Setup(m => m.GetMaintenanceTasks()).Returns(tasks);
@@ -146,6 +146,49 @@ namespace Maintenance.Tests.Task
             Assert.AreEqual(HttpStatusCode.Accepted, result.StatusCode);
             Assert.IsNotNull(result.Content);
             Assert.AreEqual(expectedAuto.VIN, result.Content.VIN);
+        }
+
+        [TestMethod]
+        public void GetMaintenanceTasks_ShouldCallRepository_GetTasksWithCorrectVIN()
+        {
+            var controller = new MaintenanceTaskController(_mockRepo.Object);
+            var id = "1";
+
+            controller.GetMaintenanceTasks(id);
+
+            _mockRepo.Verify(m => m.GetMaintenanceTasks(id));
+        }
+
+        [TestMethod]
+        public void GetMaintenanceTasks_ShouldReturnEmptyList_GivenNoTasksReturnedFromRepo()
+        {
+            var controller = new MaintenanceTaskController(_mockRepo.Object);
+            var id = "1";
+            _mockRepo.Setup(m => m.GetMaintenanceTasks(id)).Returns(new List<MaintenanceTask>());
+
+            var result = controller.GetMaintenanceTasks(id);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(0, result.Count());
+        }
+
+        [TestMethod]
+        public void GetMaintenanceTasks_ShouldReturnTasks_GivenTaskReturnedFromRepo()
+        {
+            var vin = "1";
+            var controller = new MaintenanceTaskController(_mockRepo.Object);
+            var tasks = new List<MaintenanceTask>();
+            var task = new MaintenanceTask() { Id = 1, VIN = vin };
+            tasks.Add(task);
+            _mockRepo.Setup(m => m.GetMaintenanceTasks(vin)).Returns(tasks);
+
+            var actualTasks = controller.GetMaintenanceTasks(vin);
+
+            Assert.IsNotNull(actualTasks);
+            Assert.AreEqual(1, actualTasks.Count());
+            Assert.IsNotNull(tasks[0]);
+            Assert.AreEqual(task, tasks[0]);
+            
         }
     }
 }
