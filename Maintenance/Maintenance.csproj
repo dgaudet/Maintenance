@@ -84,7 +84,6 @@
     <Content Include="Angular\app.js" />
     <Content Include="Angular\controllers.js" />
     <Content Include="Angular\Index.html" />
-    <Content Include="Angular\MaintenanceTask.js" />
     <Content Include="Angular\Partials\task-view.html" />
     <Content Include="Angular\Partials\tasks.html" />
     <Content Include="Angular\Partials\_form.html" />
