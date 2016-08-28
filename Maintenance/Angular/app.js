@@ -10,12 +10,12 @@ angular.module('maintenanceApp').config(function ($stateProvider) {
         templateUrl: 'Angular/partials/task-view.html',
         controller: 'TaskViewController'
     }).state('newTask', { //state for adding a new movie
-        url: '/movies/new',
-        templateUrl: 'Angular/partials/movie-add.html',
+        url: '/maintenancetask',
+        templateUrl: 'Angular/partials/task-add.html',
         controller: 'TaskCreateController'
     }).state('editTask', { //state for updating a movie
-        url: '/movies/:id/edit',
-        templateUrl: 'Angular/partials/movie-edit.html',
+        url: '/maintenancetask/:id',
+        templateUrl: 'Angular/partials/task-edit.html',
         controller: 'TaskEditController'
     });
 }).run(function ($state) {

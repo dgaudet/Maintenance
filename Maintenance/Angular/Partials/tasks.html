@@ -1,14 +1,15 @@
-﻿<a ui-sref="newTask" class="btn-primary btn-lg nodecoration">Add New task</a>
-
-<table class="table tasktable">
+﻿<table class="table tasktable">
     <tr>
         <td><h3>All tasks</h3></td>
         <td></td>
+        <td></td>
+        <td><a ui-sref="newTask" class="btn-primary btn">Add New task</a></td>
     </tr>
     <tr>
         <td><strong>VIN</strong></td>
         <td><strong>Name</strong></td>
         <td><strong>Date</strong></td>
+        <td></td>
     </tr>
     <tr ng-repeat="task in tasks">
         <td>{{task.VIN}}</td>

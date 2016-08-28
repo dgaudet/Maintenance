@@ -100,46 +100,46 @@ namespace Maintenance.Tests.Task
         }
 
         [TestMethod]
-        public void PutMaintenanceTask_ShouldCallRepository_InsertTask()
+        public void PostMaintenanceTask_ShouldCallRepository_InsertTask()
         {
             var _mockRepo = new Mock<IMaintenanceTaskRepository>();
             var controller = new MaintenanceTaskController(_mockRepo.Object);
             var newAuto = new MaintenanceTask() { Id = 1 };
 
-            controller.PutMaintenanceTask(newAuto);
+            controller.PostMaintenanceTask(newAuto);
 
             _mockRepo.Verify(m => m.InsertMaintenanceTask(newAuto));
         }
 
         [TestMethod]
-        public void PutMaintenanceTask_ShouldReturnBadRequest_GivenNull()
+        public void PostMaintenanceTask_ShouldReturnBadRequest_GivenNull()
         {
             var controller = new MaintenanceTaskController(_mockRepo.Object);
             _mockRepo.Setup(a => a.InsertMaintenanceTask(It.IsAny<MaintenanceTask>())).Throws(new Exception("should not be called"));
 
-            IHttpActionResult result = controller.PutMaintenanceTask(null);
+            IHttpActionResult result = controller.PostMaintenanceTask(null);
 
             Assert.IsInstanceOfType(result, typeof(BadRequestResult));
         }
 
         [TestMethod]
-        public void PutMaintenanceTask_ShouldReturnExceptionRequest_GivenRepositoryThrows()
+        public void PostMaintenanceTask_ShouldReturnExceptionRequest_GivenRepositoryThrows()
         {
             var controller = new MaintenanceTaskController(_mockRepo.Object);
             _mockRepo.Setup(a => a.InsertMaintenanceTask(It.IsAny<MaintenanceTask>())).Throws(new Exception("boom"));
 
-            IHttpActionResult result = controller.PutMaintenanceTask(new MaintenanceTask());
+            IHttpActionResult result = controller.PostMaintenanceTask(new MaintenanceTask());
 
             Assert.IsInstanceOfType(result, typeof(ExceptionResult));
         }
 
         [TestMethod]
-        public void PutMaintenanceTask_ShouldReturnContentResult_GivenAutoSaved()
+        public void PostMaintenanceTask_ShouldReturnContentResult_GivenAutoSaved()
         {
             var expectedAuto = new MaintenanceTask() { VIN = "1" };
             var controller = new MaintenanceTaskController(_mockRepo.Object);
 
-            IHttpActionResult actionResult = controller.PutMaintenanceTask(expectedAuto);
+            IHttpActionResult actionResult = controller.PostMaintenanceTask(expectedAuto);
             var result = actionResult as NegotiatedContentResult<MaintenanceTask>;
 
             Assert.IsNotNull(result);

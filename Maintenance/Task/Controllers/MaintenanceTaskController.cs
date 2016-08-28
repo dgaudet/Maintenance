@@ -41,7 +41,7 @@ namespace Maintenance.Controllers
             return Ok(task);
         }
 
-        public IHttpActionResult PutMaintenanceTask(MaintenanceTask newTask)
+        public IHttpActionResult PostMaintenanceTask(MaintenanceTask newTask)
         {
             if (newTask == null)
             {
