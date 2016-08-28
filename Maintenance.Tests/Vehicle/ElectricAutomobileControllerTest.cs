@@ -8,7 +8,6 @@ using System.Web.Http.Results;
 using System.Collections.Generic;
 using System.Linq;
 using System;
-using System.Net;
 
 namespace Maintenance.Tests.Vehicle
 {
@@ -102,52 +101,51 @@ namespace Maintenance.Tests.Vehicle
         }
 
         [TestMethod]
-        public void PutAutomobile_ShouldCallRepository_InsertAutomobileWithCorrectVIN()
+        public void PostAutomobile_ShouldCallRepository_InsertAutomobileWithCorrectVIN()
         {
             var _mockRepo = new Mock<IElectricAutomobileRepository>();
             var controller = new ElectricAutomobileController(_mockRepo.Object);
             var newAuto = new ElectricAutomobile() { VIN = "123" };
 
-            controller.PutAutomobile(newAuto);
+            controller.PostAutomobile(newAuto);
 
             _mockRepo.Verify(m => m.InsertAutomobile(newAuto));
         }
 
         [TestMethod]
-        public void PutAutomobile_ShouldReturnBadRequest_GivenNull()
+        public void PostAutomobile_ShouldReturnBadRequest_GivenNull()
         {
             var controller = new ElectricAutomobileController(_mockRepo.Object);
             _mockRepo.Setup(a => a.InsertAutomobile(It.IsAny<ElectricAutomobile>())).Throws(new Exception("should not be called"));
 
-            IHttpActionResult result = controller.PutAutomobile(null);
+            IHttpActionResult result = controller.PostAutomobile(null);
 
             Assert.IsInstanceOfType(result, typeof(BadRequestResult));
         }
 
         [TestMethod]
-        public void PutAutomobile_ShouldReturnExceptionRequest_GivenRepositoryThrows()
+        public void PostAutomobile_ShouldReturnExceptionRequest_GivenRepositoryThrows()
         {
             var controller = new ElectricAutomobileController(_mockRepo.Object);
             _mockRepo.Setup(a => a.InsertAutomobile(It.IsAny<ElectricAutomobile>())).Throws(new Exception("boom"));
 
-            IHttpActionResult result = controller.PutAutomobile(new ElectricAutomobile());
+            IHttpActionResult result = controller.PostAutomobile(new ElectricAutomobile());
 
             Assert.IsInstanceOfType(result, typeof(ExceptionResult));
         }
 
         [TestMethod]
-        public void PutAutomobile_ShouldReturnContentResult_GivenAutoSaved()
+        public void PostAutomobile_ShouldSetLocationHeader()
         {
-            var expectedAuto = new ElectricAutomobile() { VIN = "1" };
             var controller = new ElectricAutomobileController(_mockRepo.Object);
+            var expectedAuto = new ElectricAutomobile() { VIN = "1" };
 
-            IHttpActionResult actionResult = controller.PutAutomobile(expectedAuto);
-            var result = actionResult as NegotiatedContentResult<ElectricAutomobile>;
+            IHttpActionResult actionResult = controller.PostAutomobile(expectedAuto);
+            var createdResult = actionResult as CreatedAtRouteNegotiatedContentResult<ElectricAutomobile>;
 
-            Assert.IsNotNull(result);
-            Assert.AreEqual(HttpStatusCode.Accepted, result.StatusCode);
-            Assert.IsNotNull(result.Content);
-            Assert.AreEqual(expectedAuto.VIN, result.Content.VIN);
+            Assert.IsNotNull(createdResult);
+            Assert.AreEqual("DefaultApi", createdResult.RouteName);
+            Assert.AreEqual(expectedAuto.VIN, createdResult.RouteValues["id"]);
         }
     }
 }

@@ -42,4 +42,16 @@
     };
 }).controller('GasAutomobileViewController', function ($scope, $stateParams, GasAutomobile) {
     $scope.gasAutomobile = GasAutomobile.get({ id: $stateParams.id });
+}).controller('ElectricAutomobileListController', function ($scope, $state, $window, ElectricAutomobile) {
+    $scope.electricAutomobiles = ElectricAutomobile.query();
+}).controller('ElectricAutomobileCreateController', function ($scope, $state, $stateParams, ElectricAutomobile) {
+    $scope.electricAutomobile = new ElectricAutomobile();  //create new task instance. Properties will be set via ng-model on UI
+
+    $scope.addElectricAutomobile = function () {
+        $scope.electricAutomobile.$save(function () {
+            $state.go('electricAutomobiles');
+        });
+    };
+}).controller('ElectricAutomobileViewController', function ($scope, $stateParams, ElectricAutomobile) {
+    $scope.electricAutomobile = ElectricAutomobile.get({ id: $stateParams.id });
 });

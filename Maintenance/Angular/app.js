@@ -19,17 +19,29 @@ angular.module('maintenanceApp').config(function ($stateProvider) {
         controller: 'TaskEditController'
     }).state('gasAutomobiles', { // state for showing all tasks
         url: '/gasautomobile',
-        templateUrl: 'Angular/partials/gasautomobiles.html',
+        templateUrl: 'Angular/partials/gasAutomobiles.html',
         controller: 'GasAutomobileListController'
     }).state('newGasAutomobile', { //state for adding a new movie
         url: '/gasautomobile',
-        templateUrl: 'Angular/partials/gasautomobile-add.html',
+        templateUrl: 'Angular/partials/gasAutomobile-add.html',
         controller: 'GasAutomobileCreateController'
     }).state('viewGasAutomobile', { //state for showing single task
         url: '/gasAutomobile/:id',
         templateUrl: 'Angular/partials/gasAutomobile-view.html',
         controller: 'GasAutomobileViewController'
+    }).state('electricAutomobiles', {
+        url: '/electricautomobile',
+        templateUrl: 'Angular/partials/electricAutomobiles.html',
+        controller: 'ElectricAutomobileListController'
+    }).state('newElectricAutomobile', {
+        url: '/electricautomobile',
+        templateUrl: 'Angular/partials/electricAutomobile-add.html',
+        controller: 'ElectricAutomobileCreateController'
+    }).state('viewElectricAutomobile', {
+        url: '/electricAutomobile/:id',
+        templateUrl: 'Angular/partials/electricAutomobile-view.html',
+        controller: 'ElectricAutomobileViewController'
     });
 }).run(function ($state) {
-    $state.go('gasAutomobiles'); //make a transition to movies state when app starts
+    $state.go('electricAutomobiles'); //make a transition to movies state when app starts
 });

@@ -40,7 +40,7 @@ namespace Maintenance.Vehicle.Controllers
             return autos;
         }
 
-        public IHttpActionResult PutAutomobile(ElectricAutomobile newAuto)
+        public IHttpActionResult PostAutomobile(ElectricAutomobile newAuto)
         {
             if (newAuto == null)
             {
@@ -54,7 +54,8 @@ namespace Maintenance.Vehicle.Controllers
             {
                 return InternalServerError(e);
             }
-            return Content(HttpStatusCode.Accepted, newAuto);
+
+            return CreatedAtRoute("DefaultApi", new { id = newAuto.VIN }, newAuto);
         }
     }
 }
