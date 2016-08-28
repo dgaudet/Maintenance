@@ -24,6 +24,11 @@ namespace Maintenance
             return _storedTasks.FirstOrDefault(t => t.Id == id);
         }
 
+        public IEnumerable<MaintenanceTask> GetMaintenanceTasks(string vin)
+        {
+            return _storedTasks.Where(t => t.VIN.Equals(vin, StringComparison.InvariantCultureIgnoreCase));
+        }
+
         public List<MaintenanceTask> GetMaintenanceTasks()
         {
             return _storedTasks;
@@ -38,7 +43,7 @@ namespace Maintenance
             var existingTask = GetTask(task.Id);
             if (existingTask != null)
             {
-                throw new ArgumentException("Duplicate VIN is not allowed");
+                throw new ArgumentException("Duplicate id is not allowed");
             }
             _storedTasks.Add(task);
         }

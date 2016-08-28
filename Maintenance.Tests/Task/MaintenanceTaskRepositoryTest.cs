@@ -109,8 +109,8 @@ namespace Maintenance.Tests.Task
         }
 
         [TestMethod]
-        [ExpectedException(typeof(System.ArgumentException), "Duplicate VIN is not allowed")]
-        public void InsertMaintenanceTask_ShouldThrowArgumentExcption_GivenTaskWithDuplicateVIN()
+        [ExpectedException(typeof(System.ArgumentException), "Duplicate id is not allowed")]
+        public void InsertMaintenanceTask_ShouldThrowArgumentExcption_GivenTaskWithDuplicateId()
         {
             var expectedTask = new MaintenanceTask() { Id = 9, VIN = "5555" };
             _repo.InsertMaintenanceTask(expectedTask);
@@ -144,6 +144,72 @@ namespace Maintenance.Tests.Task
 
             Assert.IsNotNull(actualtask);
             Assert.AreEqual(expectedTask.VIN, actualtask.VIN);
+        }
+
+        [TestMethod]
+        public void GetMaintenanceTasks_ShouldReturnEmptyEnumerable_GivenNonExistingVIN()
+        {
+            var enumerable = _repo.GetMaintenanceTasks("non existing vin");
+            Assert.IsNotNull(enumerable);
+            Assert.AreEqual(0, enumerable.Count());
+        }
+
+        [TestMethod]
+        public void GetMaintenanceTasks_ShouldReturnCorrectTask_GivenVINWith1Task()
+        {
+            var expectedTask = new MaintenanceTask() { Id = 778, VIN = "11233a", Name = "Oil Change", Odometer = 5000, Date = DateTime.Now.AddMonths(-2) };
+            _repo.InsertMaintenanceTask(expectedTask);
+
+            var actualTasks = _repo.GetMaintenanceTasks(expectedTask.VIN);
+
+            Assert.IsNotNull(actualTasks);
+            Assert.AreEqual(1, actualTasks.Count());
+
+            var actualTask = actualTasks.First();
+            Assert.IsNotNull(actualTask);
+            Assert.AreEqual(expectedTask.VIN, actualTask.VIN);
+            Assert.AreEqual(expectedTask.Odometer, actualTask.Odometer);
+            Assert.AreEqual(expectedTask.Name, actualTask.Name);
+            Assert.AreEqual(expectedTask.Date.Date, actualTask.Date.Date);
+        }
+
+        [TestMethod]
+        public void GetMaintenanceTasks_ShouldReturnCorrectTask_GivenExistingVinButDifferentVinCase()
+        {
+            var vin = "MULTIPLECaseVIN1";
+            var expectedTask = new MaintenanceTask() { Id = 124, VIN = vin, Name = "Oil Change", Odometer = 5000, Date = DateTime.Now.AddMonths(-2) };
+            _repo.InsertMaintenanceTask(expectedTask);
+
+            var actualTasks = _repo.GetMaintenanceTasks(expectedTask.VIN.ToLower());
+
+            Assert.IsNotNull(actualTasks);
+            Assert.IsTrue(actualTasks.Count() == 1);
+
+            var actualTask = actualTasks.First();
+            Assert.IsNotNull(actualTask);
+            Assert.AreEqual(expectedTask.VIN, actualTask.VIN);
+        }
+
+        [TestMethod]
+        public void GetMaintenanceTasks_ShouldReturnCorrectTasks_GivenVINWithMultipleTasks()
+        {
+            var vin = "newVin11";
+            var expectedTask1 = new MaintenanceTask() { Id = 99969, VIN = vin, Name = "Oil Change", Odometer = 5000, Date = DateTime.Now.AddMonths(-2) };
+            _repo.InsertMaintenanceTask(expectedTask1);
+            var expectedTask2 = new MaintenanceTask() { Id = 688886, VIN = vin, Name = "Oil Change", Odometer = 5000, Date = DateTime.Now.AddMonths(-2) };
+            _repo.InsertMaintenanceTask(expectedTask2);
+
+            var actualTasks = _repo.GetMaintenanceTasks(expectedTask1.VIN);
+
+            var task1 = actualTasks.FirstOrDefault(t => t.Id == expectedTask1.Id);
+            Assert.IsNotNull(task1);
+            Assert.AreEqual(expectedTask1.Id, task1.Id);
+            Assert.AreEqual(expectedTask1.VIN, task1.VIN);
+
+            var task2 = actualTasks.FirstOrDefault(t => t.Id == expectedTask2.Id);
+            Assert.IsNotNull(task2);
+            Assert.AreEqual(expectedTask2.Id, task2.Id);
+            Assert.AreEqual(expectedTask2.VIN, task2.VIN);
         }
     }
 }
