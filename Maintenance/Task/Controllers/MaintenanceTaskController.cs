@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Web.Http;
 using Maintenance.Models;
+using System.Net;
 
 namespace Maintenance.Controllers
 {
@@ -36,6 +38,22 @@ namespace Maintenance.Controllers
                 return NotFound();
             }
             return Ok(task);
+        }
+
+        public IHttpActionResult PutMaintenanceTask(MaintenanceTask newTask)
+        {
+            if (newTask == null)
+            {
+                return BadRequest();
+            }
+            try {
+                _repository.InsertMaintenanceTask(newTask);
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+            return Content(HttpStatusCode.Accepted, newTask);
         }
     }
 }
