@@ -56,5 +56,18 @@ namespace Maintenance.Vehicle.Controllers
             }
             return Content(HttpStatusCode.Accepted, newAuto);
         }
+
+        public IHttpActionResult DeleteAutomobile(string vin)
+        {
+            try
+            {
+                _repository.DeleteAutomobile(vin);
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+            return Ok();
+        }
     }
 }

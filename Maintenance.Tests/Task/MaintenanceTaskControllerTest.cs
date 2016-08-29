@@ -214,7 +214,7 @@ namespace Maintenance.Tests.Task
         }
 
         [TestMethod]
-        public void DeleteMaintenanceTask_ShouldReturnCorrectResult_GivenExistingTask()
+        public void DeleteMaintenanceTask_ShouldReturnCorrectResult_GivenRepoDoesNotThrow()
         {
             var controller = new MaintenanceTaskController(_mockRepo.Object);
             var id = 1;

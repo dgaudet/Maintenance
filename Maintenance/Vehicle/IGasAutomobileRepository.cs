@@ -8,5 +8,6 @@ namespace Maintenance.Vehicle
         List<GasAutomobile> GetAutomobiles();
         GasAutomobile GetAutomobile(string VIN);
         void InsertAutomobile(GasAutomobile auto);
+        void DeleteAutomobile(string vin);
     }
 }

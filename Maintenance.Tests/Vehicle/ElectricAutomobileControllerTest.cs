@@ -147,5 +147,42 @@ namespace Maintenance.Tests.Vehicle
             Assert.AreEqual("DefaultApi", createdResult.RouteName);
             Assert.AreEqual(expectedAuto.VIN, createdResult.RouteValues["id"]);
         }
+
+        #region DeleteAutomobile tests
+
+        [TestMethod]
+        public void DeleteAutomobile_ShouldCallRepository_GivenAutoWithCorrectVIN()
+        {
+            var controller = new ElectricAutomobileController(_mockRepo.Object);
+            var vin = "1";
+
+            controller.DeleteAutomobile(vin);
+
+            _mockRepo.Verify(m => m.DeleteAutomobile(vin));
+        }
+
+        [TestMethod]
+        public void DeleteAutomobile_ShouldReturnExceptionRequest_GivenRepositoryThrows()
+        {
+            var controller = new ElectricAutomobileController(_mockRepo.Object);
+            _mockRepo.Setup(a => a.DeleteAutomobile(It.IsAny<string>())).Throws(new Exception("boom"));
+
+            IHttpActionResult result = controller.DeleteAutomobile("bad news");
+
+            Assert.IsInstanceOfType(result, typeof(ExceptionResult));
+        }
+
+        [TestMethod]
+        public void DeleteAutomobile_ShouldReturnCorrectResult_GivenDeleteDoesNotThrow()
+        {
+            var controller = new ElectricAutomobileController(_mockRepo.Object);
+            var vin = "1";
+
+            var actionResult = controller.DeleteAutomobile(vin);
+
+            Assert.IsInstanceOfType(actionResult, typeof(OkResult));
+        }
+
+        #endregion
     }
 }

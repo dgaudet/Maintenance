@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Web.Http;
 using System;
-using System.Net;
 
 namespace Maintenance.Vehicle.Controllers
 {
@@ -56,6 +55,19 @@ namespace Maintenance.Vehicle.Controllers
             }
 
             return CreatedAtRoute("DefaultApi", new { id = newAuto.VIN }, newAuto);
+        }
+
+        public IHttpActionResult DeleteAutomobile(string id)
+        {
+            try
+            {
+                _repository.DeleteAutomobile(id);
+            }
+            catch(Exception e)
+            {
+                return InternalServerError(e);
+            }
+            return Ok();
         }
     }
 }
