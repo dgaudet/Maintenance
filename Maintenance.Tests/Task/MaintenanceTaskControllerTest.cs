@@ -134,7 +134,7 @@ namespace Maintenance.Tests.Task
         }
 
         [TestMethod]
-        public void PostMaintenanceTask_ShouldReturnContentResult_GivenAutoSaved()
+        public void PostMaintenanceTask_ShouldReturnContentResult_GivenTaskSaved()
         {
             var expectedAuto = new MaintenanceTask() { VIN = "1" };
             var controller = new MaintenanceTaskController(_mockRepo.Object);
@@ -189,6 +189,39 @@ namespace Maintenance.Tests.Task
             Assert.IsNotNull(tasks[0]);
             Assert.AreEqual(task, tasks[0]);
             
+        }
+
+        [TestMethod]
+        public void DeleteMaintenanceTask_ShouldCallRepository_GivenTaskWithCorrectId()
+        {
+            var controller = new MaintenanceTaskController(_mockRepo.Object);
+            var id = 1;
+
+            controller.DeleteMaintenanceTask(id);
+
+            _mockRepo.Verify(m => m.DeleteMaintenanceTask(id));
+        }
+
+        [TestMethod]
+        public void DeleteMaintenanceTask_ShouldReturnExceptionRequest_GivenRepositoryThrows()
+        {
+            var controller = new MaintenanceTaskController(_mockRepo.Object);
+            _mockRepo.Setup(a => a.DeleteMaintenanceTask(It.IsAny<int>())).Throws(new Exception("boom"));
+
+            IHttpActionResult result = controller.DeleteMaintenanceTask(8);
+
+            Assert.IsInstanceOfType(result, typeof(ExceptionResult));
+        }
+
+        [TestMethod]
+        public void DeleteMaintenanceTask_ShouldReturnCorrectResult_GivenExistingTask()
+        {
+            var controller = new MaintenanceTaskController(_mockRepo.Object);
+            var id = 1;
+
+            var actionResult = controller.DeleteMaintenanceTask(id);
+
+            Assert.IsInstanceOfType(actionResult, typeof(OkResult));
         }
     }
 }

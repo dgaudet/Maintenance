@@ -9,5 +9,6 @@ namespace Maintenance
         IEnumerable<MaintenanceTask> GetMaintenanceTasks(string vin);
         MaintenanceTask GetTask(int id);
         void InsertMaintenanceTask(MaintenanceTask task);
+        void DeleteMaintenanceTask(int id);
     }
 }

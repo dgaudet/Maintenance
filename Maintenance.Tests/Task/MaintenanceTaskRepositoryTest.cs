@@ -15,6 +15,8 @@ namespace Maintenance.Tests.Task
             _repo = new MaintenanceTaskRepository();
         }
 
+    #region GetMaintenanceTask
+
         [TestMethod]
         public void GetMaintenanceTask_ShouldReturnNull_GivenNonExistingId()
         {
@@ -72,6 +74,9 @@ namespace Maintenance.Tests.Task
             Assert.AreEqual(tasks[1].Date.Date, _repo.GetTask(2).Date.Date);
             Assert.AreEqual(tasks[1].Odometer, _repo.GetTask(2).Odometer);
         }
+
+        #endregion
+        #region InsertMaintenanceTask
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
@@ -132,6 +137,9 @@ namespace Maintenance.Tests.Task
             Assert.IsNotNull(actualtask);
             Assert.AreEqual(expectedTask.VIN, actualtask.VIN);
         }
+
+        #endregion
+        #region GetMaintenanceTasks
 
         [TestMethod]
         public void GetMaintenanceTasks_ShouldReturn_InsertedTask()
@@ -211,5 +219,29 @@ namespace Maintenance.Tests.Task
             Assert.AreEqual(expectedTask2.Id, task2.Id);
             Assert.AreEqual(expectedTask2.VIN, task2.VIN);
         }
+
+        #endregion
+        #region delete tests
+
+        [TestMethod]
+        public void DeleteMaintenanceTask_ShouldDeleteExistingTask()
+        {
+            var existingTask = new MaintenanceTask() { Id = 789977, VIN = "vin for deletion" };
+            _repo.InsertMaintenanceTask(existingTask);
+
+            _repo.DeleteMaintenanceTask(existingTask.Id);
+
+            var actuaTask = _repo.GetTask(existingTask.Id);
+            Assert.IsNull(actuaTask);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException), "Task id does not exist")]
+        public void DeleteMaintenanceTask_ShouldThrowArugumentException_GivenNonExstingId()
+        {
+            _repo.DeleteMaintenanceTask(88);
+        }
+
+        #endregion
     }
 }

@@ -47,5 +47,15 @@ namespace Maintenance
             }
             _storedTasks.Add(task);
         }
+
+        public void DeleteMaintenanceTask(int id)
+        {
+            var task = GetTask(id);
+            if (task == null)
+            {
+                throw new ArgumentException();
+            }
+            _storedTasks.Remove(task);
+        }
     }
 }

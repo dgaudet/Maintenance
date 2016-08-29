@@ -66,5 +66,17 @@ namespace Maintenance.Controllers
             }
             return tasks;
         }
+
+        public IHttpActionResult DeleteMaintenanceTask(int id)
+        {
+            try {
+                _repository.DeleteMaintenanceTask(id);
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+            return Ok();
+        }
     }
 }
