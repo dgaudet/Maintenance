@@ -29,14 +29,28 @@ maintenanceApp.controller('GasAutomobileListController', function ($scope, $stat
             $state.go('gasAutomobiles'); // on success go back to home i.e. tasks state.
         });
     };
-}).controller('GasAutomobileViewController', function ($scope, $stateParams, GasAutomobile) {
+}).controller('GasAutomobileViewController', function ($scope, $state, $stateParams, popupService, GasAutomobile) {
     $scope.gasAutomobile = GasAutomobile.get({ id: $stateParams.id });
+
+    $scope.deleteAutomobile = function (id) { // Delete a task. Issues a DELETE to /api/tasks/:id
+        if (popupService.showPopup('Really delete this?')) {
+            GasAutomobile.remove(id);
+            $state.go('gasAutomobiles');
+        }
+    };
 });
 
 maintenanceApp.controller('ElectricAutomobileListController', function ElectricAutomobileListController($scope, $state, $window, ElectricAutomobile) {
     $scope.electricAutomobiles = ElectricAutomobile.query();
-}).controller('ElectricAutomobileViewController', function ElectricAutomobileViewController($scope, $stateParams, ElectricAutomobile) {
+}).controller('ElectricAutomobileViewController', function ElectricAutomobileViewController($scope, $state, $stateParams, popupService, ElectricAutomobile) {
     $scope.electricAutomobile = ElectricAutomobile.get({ id: $stateParams.id });
+
+    $scope.deleteAutomobile = function (id) { // Delete a task. Issues a DELETE to /api/tasks/:id
+        if (popupService.showPopup('Really delete this?')) {
+            ElectricAutomobile.remove(id);
+            $state.go('electricAutomobiles');
+        }
+    };
 }).controller('ElectricAutomobileCreateController', function ElectricAutomobileCreateController($scope, $state, $stateParams, ElectricAutomobile) {
     $scope.electricAutomobile = new ElectricAutomobile();  //create new task instance. Properties will be set via ng-model on UI
 

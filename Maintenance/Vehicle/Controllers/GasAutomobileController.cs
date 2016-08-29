@@ -57,11 +57,11 @@ namespace Maintenance.Vehicle.Controllers
             return Content(HttpStatusCode.Accepted, newAuto);
         }
 
-        public IHttpActionResult DeleteAutomobile(string vin)
+        public IHttpActionResult DeleteAutomobile(string id)
         {
             try
             {
-                _repository.DeleteAutomobile(vin);
+                _repository.DeleteAutomobile(id);
             }
             catch (Exception e)
             {
