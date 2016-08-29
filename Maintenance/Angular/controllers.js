@@ -1,4 +1,4 @@
-﻿angular.module('maintenanceApp.controllers', []).controller('TaskListController', function ($scope, $state, popupService, $window, Task) {
+﻿var maintenanceApp = angular.module('maintenanceApp.controllers', []).controller('TaskListController', function ($scope, $state, popupService, $window, Task) {
     $scope.tasks = Task.query(); //fetch all tasks. Issues a GET to /api/tasks
 
     $scope.deleteTask = function (task) { // Delete a task. Issues a DELETE to /api/tasks/:id
@@ -30,7 +30,9 @@
     };
 
     $scope.loadTask(); // Load a task which can be edited on UI
-}).controller('GasAutomobileListController', function ($scope, $state, $window, GasAutomobile) {
+});
+
+maintenanceApp.controller('GasAutomobileListController', function ($scope, $state, $window, GasAutomobile) {
     $scope.gasAutomobiles = GasAutomobile.query();
 }).controller('GasAutomobileCreateController', function ($scope, $state, $stateParams, GasAutomobile) {
     $scope.gasAutomobile = new GasAutomobile();  //create new task instance. Properties will be set via ng-model on UI
@@ -42,9 +44,13 @@
     };
 }).controller('GasAutomobileViewController', function ($scope, $stateParams, GasAutomobile) {
     $scope.gasAutomobile = GasAutomobile.get({ id: $stateParams.id });
-}).controller('ElectricAutomobileListController', function ($scope, $state, $window, ElectricAutomobile) {
+});
+
+maintenanceApp.controller('ElectricAutomobileListController', function ElectricAutomobileListController($scope, $state, $window, ElectricAutomobile) {
     $scope.electricAutomobiles = ElectricAutomobile.query();
-}).controller('ElectricAutomobileCreateController', function ($scope, $state, $stateParams, ElectricAutomobile) {
+}).controller('ElectricAutomobileViewController', function ElectricAutomobileViewController($scope, $stateParams, ElectricAutomobile) {
+    $scope.electricAutomobile = ElectricAutomobile.get({ id: $stateParams.id });
+}).controller('ElectricAutomobileCreateController', function ElectricAutomobileCreateController($scope, $state, $stateParams, ElectricAutomobile) {
     $scope.electricAutomobile = new ElectricAutomobile();  //create new task instance. Properties will be set via ng-model on UI
 
     $scope.addElectricAutomobile = function () {
@@ -52,6 +58,4 @@
             $state.go('electricAutomobiles');
         });
     };
-}).controller('ElectricAutomobileViewController', function ($scope, $stateParams, ElectricAutomobile) {
-    $scope.electricAutomobile = ElectricAutomobile.get({ id: $stateParams.id });
-});
+})
