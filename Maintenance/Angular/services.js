@@ -1,25 +1,13 @@
 ﻿angular.module('maintenanceApp.services', []).factory('Task', function ($resource) {
-    return $resource('http://localhost:52970/api/maintenancetask/:id', { id: '@_id' }, {
-        update: {
-            method: 'PUT'
-        }
-    });
+    return $resource('http://localhost:52970/api/maintenancetask/:id');
 });
 
 angular.module('maintenanceApp.services').factory('GasAutomobile', function ($resource) {
-    return $resource('http://localhost:52970/api/gasautomobile/:id', { id: '@_id' }, {
-        update: {
-            method: 'PUT'
-        }
-    });
+    return $resource('http://localhost:52970/api/gasautomobile/:id');
 });
 
 angular.module('maintenanceApp.services').factory('ElectricAutomobile', function ($resource) {
-    return $resource('http://localhost:52970/api/electricautomobile/:id', { id: '@_id' }, {
-        update: {
-            method: 'PUT'
-        }
-    });
+    return $resource('http://localhost:52970/api/electricautomobile/:id');
 });
 
 
