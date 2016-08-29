@@ -43,5 +43,5 @@ angular.module('maintenanceApp').config(function ($stateProvider) {
         controller: 'ElectricAutomobileViewController'
     });
 }).run(function ($state) {
-    $state.go('electricAutomobiles'); //make a transition to movies state when app starts
+    $state.go('tasks'); //make a transition to movies state when app starts
 });
