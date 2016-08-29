@@ -13,10 +13,6 @@ angular.module('maintenanceApp').config(function ($stateProvider) {
         url: '/maintenancetask',
         templateUrl: 'Angular/partials/task-add.html',
         controller: 'TaskCreateController'
-    }).state('editTask', { //state for updating a movie
-        url: '/maintenancetask/:id',
-        templateUrl: 'Angular/partials/task-edit.html',
-        controller: 'TaskEditController'
     }).state('gasAutomobiles', { // state for showing all tasks
         url: '/gasautomobile',
         templateUrl: 'Angular/partials/gasAutomobiles.html',
