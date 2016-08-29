@@ -1,12 +1,12 @@
 Maintenance
 This is a simple sample Web Api 2 example of an automobile maintenance api, using AngularJS as the front end.
-** the C# Web Api is fully unit tested
-** this is my first time trying Angular so it's not tested, and the code isn't the best
+* the C# Web Api is fully unit tested
+* this is my first time trying Angular so it's not tested, and the code isn't the best
 
 ## How To run:
 * Open the sln file in Visual Studio 2015 (You can use the community edition for free)
 * On the top menu click Tests -> All Tests
-** On the top menu click Tests -> Window -> Test Explorer to see the test results
+* On the top menu click Tests -> Window -> Test Explorer to see the test results
 * Then you can run the app Debug -> Start Debugging
 * Visual Studio will spin up an IISExpress web server, mine started on port 52970, yours may or may not. If not you will need to modify the port in the Angular -> Services.js file
 * You should be able to access the gui at http://localhost:52970/angular/
