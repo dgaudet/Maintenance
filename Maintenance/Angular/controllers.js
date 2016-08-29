@@ -1,11 +1,10 @@
 ﻿var maintenanceApp = angular.module('maintenanceApp.controllers', []).controller('TaskListController', function ($scope, $state, popupService, $window, Task) {
     $scope.tasks = Task.query(); //fetch all tasks. Issues a GET to /api/tasks
 
-    $scope.deleteTask = function (task) { // Delete a task. Issues a DELETE to /api/tasks/:id
+    $scope.deleteTask = function (id) { // Delete a task. Issues a DELETE to /api/tasks/:id
         if (popupService.showPopup('Really delete this?')) {
-            task.$delete(function () {
-                $window.location.href = ''; //redirect to home
-            });
+            Task.remove(id);
+            //$window.location.href = '/angular/';
         }
     };
 }).controller('TaskViewController', function ($scope, $stateParams, Task) {

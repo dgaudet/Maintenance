@@ -17,7 +17,7 @@
         <td>{{task.Date | date:'MM/dd/yyyy'}}</td>
         <td>
             <a class="btn btn-primary" ui-sref="viewTask({id:task.Id})">View</a>
-            <a class="btn btn-danger" ng-click="deleteTask(task)">Delete</a>
+            <a class="btn btn-danger" ng-click="deleteTask({id:task.Id})">Delete</a>
         </td>
     </tr>
 </table>
