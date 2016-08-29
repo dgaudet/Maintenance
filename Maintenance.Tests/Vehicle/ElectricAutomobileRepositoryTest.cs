@@ -15,6 +15,8 @@ namespace Maintenance.Tests.Vehicle
             _repo = new ElectricAutomobileRepository();
         }
 
+        #region GetAutomobile tests
+
         [TestMethod]
         public void GetAutomobile_ShouldReturnNull_GivenNonExistingVin()
         {
@@ -50,7 +52,7 @@ namespace Maintenance.Tests.Vehicle
             Assert.AreEqual(2012, auto.Year);
             Assert.AreEqual(435, auto.BatteryPackWeight);
         }
-
+        
         [TestMethod]
         public void GetAutomobile_ShouldReturnCorrectAutomobile_GivenExistingVinButDifferentVinCase()
         {
@@ -60,6 +62,9 @@ namespace Maintenance.Tests.Vehicle
             Assert.IsNotNull(auto);
             Assert.IsTrue(vin.Equals(auto.VIN, System.StringComparison.InvariantCultureIgnoreCase));
         }
+
+#endregion
+        #region GetAutomobiles tests
 
         [TestMethod]
         public void GetAutomobiles_ShouldReturnTwo()
@@ -72,27 +77,30 @@ namespace Maintenance.Tests.Vehicle
         [TestMethod]
         public void GetAutomobiles_ShouldReturnTheSameAutosAsGetAutomobile()
         {
-            var tasks = _repo.GetAutomobiles();
+            var autos = _repo.GetAutomobiles();
 
-            Assert.IsNotNull(tasks);
+            Assert.IsNotNull(autos);
             var automobile1 = _repo.GetAutomobile("OrangeCar1");
             Assert.IsNotNull(automobile1);
-            Assert.AreEqual(tasks[0].VIN, automobile1.VIN);
-            Assert.AreEqual(tasks[0].Odometer, automobile1.Odometer);
-            Assert.AreEqual(tasks[0].Make, automobile1.Make);
-            Assert.AreEqual(tasks[0].Model, automobile1.Model);
-            Assert.AreEqual(tasks[0].Year, automobile1.Year);
+            Assert.AreEqual(autos[0].VIN, automobile1.VIN);
+            Assert.AreEqual(autos[0].Odometer, automobile1.Odometer);
+            Assert.AreEqual(autos[0].Make, automobile1.Make);
+            Assert.AreEqual(autos[0].Model, automobile1.Model);
+            Assert.AreEqual(autos[0].Year, automobile1.Year);
             Assert.AreEqual(automobile1.BatteryPackWeight, 2877);
 
             var automobile2 = _repo.GetAutomobile("GreenCar1");
             Assert.IsNotNull(automobile2);
-            Assert.AreEqual(tasks[1].VIN, automobile2.VIN);
-            Assert.AreEqual(tasks[1].Odometer, automobile2.Odometer);
-            Assert.AreEqual(tasks[1].Make, automobile2.Make);
-            Assert.AreEqual(tasks[1].Model, automobile2.Model);
-            Assert.AreEqual(tasks[1].Year, automobile2.Year);
+            Assert.AreEqual(autos[1].VIN, automobile2.VIN);
+            Assert.AreEqual(autos[1].Odometer, automobile2.Odometer);
+            Assert.AreEqual(autos[1].Make, automobile2.Make);
+            Assert.AreEqual(autos[1].Model, automobile2.Model);
+            Assert.AreEqual(autos[1].Year, automobile2.Year);
             Assert.AreEqual(automobile2.BatteryPackWeight, 435);
-        }        
+        }
+
+#endregion
+        #region InsertAutomobile tests
 
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentException))]
@@ -106,6 +114,20 @@ namespace Maintenance.Tests.Vehicle
         public void InsertAutomobile_ShouldThrowArugumentException_GivenAutoWithNullVIN()
         {
             _repo.InsertAutomobile(new ElectricAutomobile());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void InsertAutomobile_ShouldThrowArugumentException_GivenAutoWithEmptyVIN()
+        {
+            _repo.InsertAutomobile(new ElectricAutomobile() { VIN = string.Empty });
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void InsertAutomobile_ShouldThrowArugumentException_GivenAutoWithWhitespaceVIN()
+        {
+            _repo.InsertAutomobile(new ElectricAutomobile() { VIN = "   " });
         }
 
         [TestMethod]
@@ -168,5 +190,61 @@ namespace Maintenance.Tests.Vehicle
             Assert.IsNotNull(actualAuto);
             Assert.AreEqual(expectedAuto.VIN, actualAuto.VIN);
         }
+        #endregion
+        #region delete tests
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException), "VIN must not be null")]
+        public void DeleteAutomobile_ShouldThrowException_GivenNull()
+        {
+            _repo.DeleteAutomobile(null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException), "invalid VIN")]
+        public void DeleteAutomobile_ShouldThrowException_GivenEmpty()
+        {
+            _repo.DeleteAutomobile(string.Empty);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException), "invalid VIN")]
+        public void DeleteAutomobile_ShouldThrowException_GivenWhitespace()
+        {
+            _repo.DeleteAutomobile("    ");
+        }
+
+        [TestMethod]
+        public void DeleteAutomobile_ShouldDeleteExistingAuto()
+        {
+            var existingAuto = new ElectricAutomobile() { VIN = "vin for deletion" };
+            _repo.InsertAutomobile(existingAuto);
+
+            _repo.DeleteAutomobile(existingAuto.VIN);
+
+            var actuaAuto = _repo.GetAutomobile(existingAuto.VIN);
+            Assert.IsNull(actuaAuto);
+        }
+
+        [TestMethod]
+        public void DeleteAutomobile_ShouldDeleteExistingAuto_GivenDifferentCaseOfVin()
+        {
+            var existingAuto = new ElectricAutomobile() { VIN = "UPPER CASE VIN FOR DELETE" };
+            _repo.InsertAutomobile(existingAuto);
+
+            _repo.DeleteAutomobile(existingAuto.VIN.ToLower());
+
+            var actuaAuto = _repo.GetAutomobile(existingAuto.VIN);
+            Assert.IsNull(actuaAuto);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException), "VIN does not exist")]
+        public void DeleteAutomobile_ShouldThrowArugumentException_GivenNonExstingId()
+        {
+            _repo.DeleteAutomobile("non existing vin");
+        }
+
+        #endregion
     }
 }

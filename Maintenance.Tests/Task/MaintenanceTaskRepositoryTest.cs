@@ -34,7 +34,7 @@ namespace Maintenance.Tests.Task
             Assert.AreEqual(task.Odometer, 5000);
             var TwoMonthsAgo = DateTime.Now.AddMonths(-2);
             Assert.AreEqual(task.Date.Date, TwoMonthsAgo.Date);
-        }
+        }        
 
         [TestMethod]
         public void GetMaintenanceTask_ShouldReturnCorrectTask_GivenTaskId2()
@@ -48,6 +48,9 @@ namespace Maintenance.Tests.Task
             var OneMonthAgo = DateTime.Now.AddMonths(-1);
             Assert.AreEqual(task.Date.Date, OneMonthAgo.Date);
         }
+
+        #endregion
+        #region GetMaintenanceTasks
 
         [TestMethod]
         public void GetMaintenanceTasks_ShouldReturnTwoTasks()
@@ -89,13 +92,27 @@ namespace Maintenance.Tests.Task
         [ExpectedException(typeof(System.ArgumentException))]
         public void InsertMaintenanceTask_ShouldThrowArugumentException_GivenTaskWithNullVIN()
         {
-            _repo.InsertMaintenanceTask(new MaintenanceTask());
+            _repo.InsertMaintenanceTask(new MaintenanceTask() { Id = 343434 });
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void InsertMaintenanceTask_ShouldThrowArugumentException_GivenTaskWithEmptyVIN()
+        {
+            _repo.InsertMaintenanceTask(new MaintenanceTask() { Id = 44556734, VIN = string.Empty });
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void InsertMaintenanceTask_ShouldThrowArugumentException_GivenTaskWithWhitespaceVIN()
+        {
+            _repo.InsertMaintenanceTask(new MaintenanceTask() { Id = 665734, VIN = "  " });
         }
 
         [TestMethod]
         public void InsertMaintenanceTask_ShouldAllowInsertingTask()
         {
-            _repo.InsertMaintenanceTask(new MaintenanceTask() { VIN = "9977" });
+            _repo.InsertMaintenanceTask(new MaintenanceTask() { Id = 487834, VIN = "9977" });
         }
 
         [TestMethod]

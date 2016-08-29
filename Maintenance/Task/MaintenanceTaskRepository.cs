@@ -36,9 +36,9 @@ namespace Maintenance
 
         public void InsertMaintenanceTask(MaintenanceTask task)
         {
-            if (task == null || task.VIN == null)
+            if (task == null || string.IsNullOrWhiteSpace(task.VIN))
             {
-                throw new ArgumentException();
+                throw new ArgumentException("Invalid task, either task is null or vin is invalid");
             }
             var existingTask = GetTask(task.Id);
             if (existingTask != null)

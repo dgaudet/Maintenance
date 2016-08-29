@@ -32,9 +32,9 @@ namespace Maintenance.Vehicle
 
         public void InsertAutomobile(ElectricAutomobile auto)
         {
-            if (auto == null || auto.VIN == null)
+            if (auto == null || string.IsNullOrWhiteSpace(auto.VIN))
             {
-                throw new ArgumentException();
+                throw new ArgumentException("Invalid auto, either auto is null or invalid VIN");
             }
             var existingAuto = GetAutomobile(auto.VIN);
             if (existingAuto != null)
@@ -42,6 +42,20 @@ namespace Maintenance.Vehicle
                 throw new ArgumentException("Duplicate VIN is not allowed");
             }
             _storedAutos.Add(auto);
+        }
+
+        public void DeleteAutomobile(string vin)
+        {
+            if (string.IsNullOrWhiteSpace(vin))
+            {
+                throw new ArgumentException("VIN must not be null");
+            }
+            var existingAuto = GetAutomobile(vin);
+            if (existingAuto == null)
+            {
+                throw new ArgumentException("VIN does not exist");
+            }
+            _storedAutos.Remove(existingAuto);
         }
     }
 }

@@ -15,6 +15,8 @@ namespace Maintenance.Tests.Vehicle
             _repo = new GasAutomobileRepository();
         }
 
+        #region GetAutomobile
+
         [TestMethod]
         public void GetAutomobile_ShouldReturnNull_GivenNonExistingVIN()
         {
@@ -62,6 +64,9 @@ namespace Maintenance.Tests.Vehicle
             Assert.IsTrue(vin.Equals(auto.VIN, System.StringComparison.InvariantCultureIgnoreCase));
         }
 
+#endregion
+        #region GetAutomobiles tests
+
         [TestMethod]
         public void GetAutomobiles_ShouldReturnTwo()
         {
@@ -96,6 +101,9 @@ namespace Maintenance.Tests.Vehicle
             Assert.AreEqual(automobile2.NumberOfSparkPlugs, 8);
         }
 
+#endregion
+        #region InsertAutomobile tests
+
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentException))]
         public void InsertAutomobile_ShouldThrowArugumentException_GivenNull()
@@ -108,6 +116,20 @@ namespace Maintenance.Tests.Vehicle
         public void InsertAutomobile_ShouldThrowArugumentException_GivenAutoWithNullVIN()
         {
             _repo.InsertAutomobile(new GasAutomobile());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void InsertAutomobile_ShouldThrowArugumentException_GivenAutoWithEmptyVIN()
+        {
+            _repo.InsertAutomobile(new GasAutomobile() { VIN = string.Empty });
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void InsertAutomobile_ShouldThrowArugumentException_GivenAutoWithWhitespaceVIN()
+        {
+            _repo.InsertAutomobile(new GasAutomobile() { VIN = "   " });
         }
 
         [TestMethod]
@@ -170,5 +192,64 @@ namespace Maintenance.Tests.Vehicle
             Assert.IsNotNull(actualAuto);
             Assert.AreEqual(expectedAuto.VIN, actualAuto.VIN);
         }
+
+#endregion
+        #region delete tests
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException), "invalid VIN")]
+        public void DeleteAutomobile_ShouldThrowException_GivenNull()
+        {
+            _repo.DeleteAutomobile(null);
+            _repo.DeleteAutomobile(string.Empty);
+            _repo.DeleteAutomobile("    ");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException), "invalid VIN")]
+        public void DeleteAutomobile_ShouldThrowException_GivenEmpty()
+        {
+            _repo.DeleteAutomobile(string.Empty);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException), "invalid VIN")]
+        public void DeleteAutomobile_ShouldThrowException_GivenWhitespace()
+        {
+            _repo.DeleteAutomobile("    ");
+        }
+
+        [TestMethod]
+        public void DeleteAutomobile_ShouldDeleteExistingAuto()
+        {
+            var existingAuto = new GasAutomobile() { VIN = "vin for deletion" };
+            _repo.InsertAutomobile(existingAuto);
+
+            _repo.DeleteAutomobile(existingAuto.VIN);
+
+            var actuaAuto = _repo.GetAutomobile(existingAuto.VIN);
+            Assert.IsNull(actuaAuto);
+        }
+
+        [TestMethod]
+        public void DeleteAutomobile_ShouldDeleteExistingAuto_GivenDifferentCaseOfVin()
+        {
+            var existingAuto = new GasAutomobile() { VIN = "UPPER CASE VIN FOR DELETE" };
+            _repo.InsertAutomobile(existingAuto);
+
+            _repo.DeleteAutomobile(existingAuto.VIN.ToLower());
+
+            var actuaAuto = _repo.GetAutomobile(existingAuto.VIN);
+            Assert.IsNull(actuaAuto);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException), "VIN does not exist")]
+        public void DeleteAutomobile_ShouldThrowArugumentException_GivenNonExstingId()
+        {
+            _repo.DeleteAutomobile("non existing vin");
+        }
+
+        #endregion
     }
 }
