@@ -61,10 +61,13 @@ maintenanceApp.controller('ElectricAutomobileListController', function ElectricA
     };
 })
 
-maintenanceApp.controller('DieselAutomobileListController', function DieselAutomobileListController($scope, $state, $window, DieselAutomobile) {
-    $scope.dieselAutomobiles = DieselAutomobile.query();
-}).controller('DieselAutomobileViewController', function DieselAutomobileViewController($scope, $state, $stateParams, popupService, DieselAutomobile) {
-    $scope.dieselAutomobile = DieselAutomobile.get({ id: $stateParams.id });
+maintenanceApp.controller('DieselAutomobileListController', function DieselAutomobileListController($scope, $state, $window, DieselAutomobileService) {
+    $scope.automobiles = DieselAutomobileService.query();
+    $scope.automobileType = 'Diesel';
+    $scope.addAutomobileState = 'newDieselAutomobile';
+    $scope.viewAutomobileState = 'viewDieselAutomobile';
+}).controller('DieselAutomobileViewController', function DieselAutomobileViewController($scope, $state, $stateParams, popupService, DieselAutomobileService) {
+    $scope.dieselAutomobile = DieselAutomobileService.get({ id: $stateParams.id });
 
     $scope.deleteAutomobile = function (id) { // Delete a task. Issues a DELETE to /api/tasks/:id
         if (popupService.showPopup('Really delete this?')) {
@@ -72,8 +75,8 @@ maintenanceApp.controller('DieselAutomobileListController', function DieselAutom
             $state.go('dieselAutomobiles');
         }
     };
-}).controller('DieselAutomobileCreateController', function DieselAutomobileCreateController($scope, $state, $stateParams, DieselAutomobile) {
-    $scope.dieselAutomobile = new DieselAutomobile();  //create new task instance. Properties will be set via ng-model on UI
+}).controller('DieselAutomobileCreateController', function DieselAutomobileCreateController($scope, $state, $stateParams, DieselAutomobileService) {
+    $scope.dieselAutomobile = new DieselAutomobileService();  //create new task instance. Properties will be set via ng-model on UI
 
     $scope.addDieselAutomobile = function () {
         $scope.dieselAutomobile.$save(function () {
