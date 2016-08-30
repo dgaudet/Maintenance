@@ -40,19 +40,22 @@ maintenanceApp.controller('GasAutomobileListController', function ($scope, $stat
     };
 });
 
-maintenanceApp.controller('ElectricAutomobileListController', function ElectricAutomobileListController($scope, $state, $window, ElectricAutomobile) {
-    $scope.electricAutomobiles = ElectricAutomobile.query();
-}).controller('ElectricAutomobileViewController', function ElectricAutomobileViewController($scope, $state, $stateParams, popupService, ElectricAutomobile) {
-    $scope.electricAutomobile = ElectricAutomobile.get({ id: $stateParams.id });
+maintenanceApp.controller('ElectricAutomobileListController', function ElectricAutomobileListController($scope, $state, $window, ElectricAutomobileService) {
+    $scope.automobiles = ElectricAutomobileService.query();
+    $scope.automobileType = 'Electric';
+    $scope.addAutomobileState = 'newElectricAutomobile';
+    $scope.viewAutomobileState = 'viewElectricAutomobile';
+}).controller('ElectricAutomobileViewController', function ElectricAutomobileViewController($scope, $state, $stateParams, popupService, ElectricAutomobileService) {
+    $scope.electricAutomobile = ElectricAutomobileService.get({ id: $stateParams.id });
 
     $scope.deleteAutomobile = function (id) { // Delete a task. Issues a DELETE to /api/tasks/:id
         if (popupService.showPopup('Really delete this?')) {
-            ElectricAutomobile.remove(id);
+            ElectricAutomobileService.remove(id);
             $state.go('electricAutomobiles');
         }
     };
-}).controller('ElectricAutomobileCreateController', function ElectricAutomobileCreateController($scope, $state, $stateParams, ElectricAutomobile) {
-    $scope.electricAutomobile = new ElectricAutomobile();  //create new task instance. Properties will be set via ng-model on UI
+}).controller('ElectricAutomobileCreateController', function ElectricAutomobileCreateController($scope, $state, $stateParams, ElectricAutomobileService) {
+    $scope.electricAutomobile = new ElectricAutomobileService();  //create new task instance. Properties will be set via ng-model on UI
 
     $scope.addElectricAutomobile = function () {
         $scope.electricAutomobile.$save(function () {

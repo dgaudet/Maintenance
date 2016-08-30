@@ -6,7 +6,7 @@ angular.module('maintenanceApp.services').factory('GasAutomobile', function ($re
     return $resource('http://localhost:52970/api/gasautomobile/:id');
 });
 
-angular.module('maintenanceApp.services').factory('ElectricAutomobile', function ($resource) {
+angular.module('maintenanceApp.services').factory('ElectricAutomobileService', function ($resource) {
     return $resource('http://localhost:52970/api/electricautomobile/:id');
 });
 

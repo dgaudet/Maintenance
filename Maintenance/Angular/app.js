@@ -27,7 +27,7 @@ angular.module('maintenanceApp').config(function ($stateProvider) {
         controller: 'GasAutomobileViewController'
     }).state('electricAutomobiles', {
         url: '/electricautomobile',
-        templateUrl: 'Angular/partials/electricAutomobiles.html',
+        templateUrl: 'Angular/partials/automobiles.html',
         controller: 'ElectricAutomobileListController'
     }).state('newElectricAutomobile', {
         url: '/electricautomobile',
