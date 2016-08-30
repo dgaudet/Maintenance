@@ -1,0 +1,30 @@
+﻿<table class="table dieselAutomobiletable">
+    <tr>
+        <td><h3>Details for Automobile: {{dieselAutomobile.VIN}}</h3></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>VIN</td>
+        <td>{{dieselAutomobile.VIN}}</td>
+    </tr>
+    <tr>
+        <td>Automobile Make</td>
+        <td>{{dieselAutomobile.Make}}</td>
+    </tr>
+    <tr>
+        <td>Automobile Model</td>
+        <td>{{dieselAutomobile.Model}}</td>
+    </tr>
+    <tr>
+        <td>Automobile Year</td>
+        <td>{{dieselAutomobile.Year}}</td>
+    </tr>
+    <tr>
+        <td>Odometer Reading</td>
+        <td>{{dieselAutomobile.Odometer}}</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><a class="btn btn-danger" ng-click="deleteAutomobile({id:dieselAutomobile.VIN})">Delete</a></td>
+    </tr>
+</table>

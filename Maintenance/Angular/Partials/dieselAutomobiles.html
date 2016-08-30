@@ -1,0 +1,22 @@
+﻿<table class="table automobiletable">
+    <tr>
+        <td><h3>All Diesel Automobiles</h3></td>
+        <td></td>
+        <td></td>
+        <td><a ui-sref="newDieselAutomobile" class="btn-primary btn">Add New Automobile</a></td>
+    </tr>
+    <tr>
+        <td><strong>VIN</strong></td>
+        <td><strong>Make</strong></td>
+        <td><strong>Model</strong></td>
+        <td></td>
+    </tr>
+    <tr ng-repeat="automobile in dieselAutomobiles">
+        <td>{{automobile.VIN}}</td>
+        <td>{{automobile.Make}}</td>
+        <td>{{automobile.Model}}</td>
+        <td>
+            <a class="btn btn-primary" ui-sref="viewDieselAutomobile({id:automobile.VIN})">View</a>
+        </td>
+    </tr>
+</table>

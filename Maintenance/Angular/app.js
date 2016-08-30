@@ -37,6 +37,18 @@ angular.module('maintenanceApp').config(function ($stateProvider) {
         url: '/electricAutomobile/:id',
         templateUrl: 'Angular/partials/electricAutomobile-view.html',
         controller: 'ElectricAutomobileViewController'
+    }).state('dieselAutomobiles', {
+        url: '/dieselautomobile',
+        templateUrl: 'Angular/partials/dieselAutomobiles.html',
+        controller: 'DieselAutomobileListController'
+    }).state('newDieselAutomobile', {
+        url: '/dieselautomobile',
+        templateUrl: 'Angular/partials/dieselAutomobile-add.html',
+        controller: 'DieselAutomobileCreateController'
+    }).state('viewDieselAutomobile', {
+        url: '/dieselAutomobile/:id',
+        templateUrl: 'Angular/partials/dieselAutomobile-view.html',
+        controller: 'DieselAutomobileViewController'
     });
 }).run(function ($state) {
     $state.go('tasks'); //make a transition to movies state when app starts

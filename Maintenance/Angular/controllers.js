@@ -60,3 +60,24 @@ maintenanceApp.controller('ElectricAutomobileListController', function ElectricA
         });
     };
 })
+
+maintenanceApp.controller('DieselAutomobileListController', function DieselAutomobileListController($scope, $state, $window, DieselAutomobile) {
+    $scope.dieselAutomobiles = DieselAutomobile.query();
+}).controller('DieselAutomobileViewController', function DieselAutomobileViewController($scope, $state, $stateParams, popupService, DieselAutomobile) {
+    $scope.dieselAutomobile = DieselAutomobile.get({ id: $stateParams.id });
+
+    $scope.deleteAutomobile = function (id) { // Delete a task. Issues a DELETE to /api/tasks/:id
+        if (popupService.showPopup('Really delete this?')) {
+            DieselAutomobile.remove(id);
+            $state.go('dieselAutomobiles');
+        }
+    };
+}).controller('DieselAutomobileCreateController', function DieselAutomobileCreateController($scope, $state, $stateParams, DieselAutomobile) {
+    $scope.dieselAutomobile = new DieselAutomobile();  //create new task instance. Properties will be set via ng-model on UI
+
+    $scope.addDieselAutomobile = function () {
+        $scope.dieselAutomobile.$save(function () {
+            $state.go('dieselAutomobiles');
+        });
+    };
+})
