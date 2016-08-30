@@ -2,7 +2,7 @@
     return $resource('http://localhost:52970/api/maintenancetask/:id');
 });
 
-angular.module('maintenanceApp.services').factory('GasAutomobile', function ($resource) {
+angular.module('maintenanceApp.services').factory('GasAutomobileService', function ($resource) {
     return $resource('http://localhost:52970/api/gasautomobile/:id');
 });
 

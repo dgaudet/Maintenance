@@ -15,7 +15,7 @@ angular.module('maintenanceApp').config(function ($stateProvider) {
         controller: 'TaskCreateController'
     }).state('gasAutomobiles', { // state for showing all tasks
         url: '/gasautomobile',
-        templateUrl: 'Angular/partials/gasAutomobiles.html',
+        templateUrl: 'Angular/partials/automobiles.html',
         controller: 'GasAutomobileListController'
     }).state('newGasAutomobile', { //state for adding a new movie
         url: '/gasautomobile',
