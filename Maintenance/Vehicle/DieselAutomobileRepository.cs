@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Maintenance.Vehicle
 {
-    public class DieselAutomobileRepository
+    public class DieselAutomobileRepository : IDieselAutomobileRepository
     {
         static List<DieselAutomobile> _storedAutos;
         public DieselAutomobileRepository()
@@ -14,8 +14,8 @@ namespace Maintenance.Vehicle
             if (_storedAutos == null)
             {
                 _storedAutos = new List<DieselAutomobile>();
-                InsertAutomobile(new DieselAutomobile() { VIN = "RedCar1", Odometer = 5000, Make = "Nissan", Model = "Murano", Year = 2011});
-                InsertAutomobile(new DieselAutomobile() { VIN = "BlueCar1", Odometer = 15000, Make = "Nissan", Model = "Frontier", Year = 2006 });
+                InsertAutomobile(new DieselAutomobile() { VIN = "BlackTruck1", Odometer = 5000, Make = "Dodge", Model = "Heavy Duty", Year = 2013});
+                InsertAutomobile(new DieselAutomobile() { VIN = "GreyCar1", Odometer = 15000, Make = "Volkswagon", Model = "Passat", Year = 2009 });
             }
         }
 

@@ -26,36 +26,36 @@ namespace Maintenance.Tests.Vehicle
         [TestMethod]
         public void GetAutomobile_ShouldReturnCorrectAutomobile_GivenExistingVIN1()
         {
-            var vin = "RedCar1";
+            var vin = "BlackTruck1";
 
             var auto = _repo.GetAutomobile(vin);
 
             Assert.IsNotNull(auto);
             Assert.AreEqual(vin, auto.VIN);
             Assert.AreEqual(5000, auto.Odometer);
-            Assert.AreEqual("Nissan", auto.Make);
-            Assert.AreEqual("Murano", auto.Model);
-            Assert.AreEqual(2011, auto.Year);
+            Assert.AreEqual("Dodge", auto.Make);
+            Assert.AreEqual("Heavy Duty", auto.Model);
+            Assert.AreEqual(2013, auto.Year);
         }
 
         [TestMethod]
         public void GetAutomobile_ShouldReturnCorrectAutomobile_GivenExistingVIN2()
         {
-            var vin = "BlueCar1";
+            var vin = "GreyCar1";
 
             var auto = _repo.GetAutomobile(vin);
 
             Assert.IsNotNull(auto);
             Assert.AreEqual(vin, auto.VIN);
-            Assert.AreEqual("Nissan", auto.Make);
-            Assert.AreEqual("Frontier", auto.Model);
-            Assert.AreEqual(2006, auto.Year);
+            Assert.AreEqual("Volkswagon", auto.Make);
+            Assert.AreEqual("Passat", auto.Model);
+            Assert.AreEqual(2009, auto.Year);
         }
 
         [TestMethod]
         public void GetAutomobile_ShouldReturnCorrectAutomobile_GivenExistingVinButDifferentVinCase()
         {
-            var vin = "bluecar1";
+            var vin = "BlackTruck1";
 
             var auto = _repo.GetAutomobile(vin);
             Assert.IsNotNull(auto);
@@ -80,7 +80,7 @@ namespace Maintenance.Tests.Vehicle
 
             Assert.IsNotNull(autos);
 
-            var automobile1 = _repo.GetAutomobile("RedCar1");
+            var automobile1 = _repo.GetAutomobile("BlackTruck1");
             Assert.IsNotNull(automobile1);
             Assert.AreEqual(autos[0].VIN, automobile1.VIN);
             Assert.AreEqual(autos[0].Odometer, automobile1.Odometer);
@@ -88,7 +88,7 @@ namespace Maintenance.Tests.Vehicle
             Assert.AreEqual(autos[0].Model, automobile1.Model);
             Assert.AreEqual(autos[0].Year, automobile1.Year);
 
-            var automobile2 = _repo.GetAutomobile("BlueCar1");
+            var automobile2 = _repo.GetAutomobile("GreyCar1");
             Assert.IsNotNull(automobile2);
             Assert.AreEqual(autos[1].VIN, automobile2.VIN);
             Assert.AreEqual(autos[1].Odometer, automobile2.Odometer);
