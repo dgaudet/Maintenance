@@ -90,7 +90,7 @@
     <Content Include="Angular\Partials\task-add.html" />
     <Content Include="Angular\Partials\task-view.html" />
     <Content Include="Angular\Partials\tasks.html" />
-    <Content Include="Angular\Partials\_form.html" />
+    <Content Include="Angular\Partials\_taskForm.html" />
     <Content Include="Angular\Partials\_automobileForm.html" />
     <Content Include="Angular\services.js" />
     <Content Include="Default.aspx" />
