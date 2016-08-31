@@ -33,7 +33,7 @@ maintenanceApp.controller('GasAutomobileListController', function ($scope, $stat
         });
     };
 }).controller('GasAutomobileViewController', function ($scope, $state, $stateParams, popupService, GasAutomobileService) {
-    $scope.gasAutomobile = GasAutomobileService.get({ id: $stateParams.id });
+    $scope.automobile = GasAutomobileService.get({ id: $stateParams.id });
 
     $scope.deleteAutomobile = function (id) { // Delete a task. Issues a DELETE to /api/tasks/:id
         if (popupService.showPopup('Really delete this?')) {
@@ -49,7 +49,7 @@ maintenanceApp.controller('ElectricAutomobileListController', function ElectricA
     $scope.addAutomobileState = 'newElectricAutomobile';
     $scope.viewAutomobileState = 'viewElectricAutomobile';
 }).controller('ElectricAutomobileViewController', function ElectricAutomobileViewController($scope, $state, $stateParams, popupService, ElectricAutomobileService) {
-    $scope.electricAutomobile = ElectricAutomobileService.get({ id: $stateParams.id });
+    $scope.automobile = ElectricAutomobileService.get({ id: $stateParams.id });
 
     $scope.deleteAutomobile = function (id) { // Delete a task. Issues a DELETE to /api/tasks/:id
         if (popupService.showPopup('Really delete this?')) {
@@ -73,7 +73,7 @@ maintenanceApp.controller('DieselAutomobileListController', function DieselAutom
     $scope.addAutomobileState = 'newDieselAutomobile';
     $scope.viewAutomobileState = 'viewDieselAutomobile';
 }).controller('DieselAutomobileViewController', function DieselAutomobileViewController($scope, $state, $stateParams, popupService, DieselAutomobileService) {
-    $scope.dieselAutomobile = DieselAutomobileService.get({ id: $stateParams.id });
+    $scope.automobile = DieselAutomobileService.get({ id: $stateParams.id });
 
     $scope.deleteAutomobile = function (id) { // Delete a task. Issues a DELETE to /api/tasks/:id
         if (popupService.showPopup('Really delete this?')) {
