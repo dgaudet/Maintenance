@@ -113,6 +113,7 @@
     <Compile Include="Vehicle\ElectricAutomobileRepository.cs" />
     <Compile Include="Vehicle\IDieselAutomobileRepository.cs" />
     <Compile Include="Vehicle\IElectricAutomobileRepository.cs" />
+    <Compile Include="Vehicle\MaintenanceTypeService.cs" />
     <Compile Include="Vehicle\Models\DieselAutomobile.cs" />
     <Compile Include="Vehicle\Models\Automobile.cs" />
     <Compile Include="Vehicle\Controllers\GasAutomobileController.cs" />

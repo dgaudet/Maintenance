@@ -69,6 +69,7 @@
     <Compile Include="Task\MaintenanceTaskRepositoryTest.cs" />
     <Compile Include="Task\MaintenanceTaskControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Vehicle\MaintenanceTypeServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Maintenance\Maintenance.csproj">

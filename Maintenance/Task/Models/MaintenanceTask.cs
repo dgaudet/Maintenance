@@ -23,6 +23,7 @@ namespace Maintenance.Models
         [Description("Oil Change")] OilChange,
         [Description("Tire Rotation")] TireRotation,
         [Description("Battery Pack Replacement")] BatteryPackReplacement,
-        [Description("Glow Plug Replacement")] GlowPlugReplacement
+        [Description("Glow Plug Replacement")] GlowPlugReplacement,
+        [Description("Spark Plug Replacement")] SparkPlugReplacement
     }
 }
