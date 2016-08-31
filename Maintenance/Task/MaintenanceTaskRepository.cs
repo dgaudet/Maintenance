@@ -14,8 +14,8 @@ namespace Maintenance
             if (_storedTasks == null)
             {
                 _storedTasks = new List<MaintenanceTask>();
-                InsertMaintenanceTask(new MaintenanceTask { Id = 1, VIN = "RedCar1", Name = "Oil Change", Odometer = 5000, Date = DateTime.Now.AddMonths(-2), type = TaskType.OilChange });
-                InsertMaintenanceTask(new MaintenanceTask { Id = 2, VIN = "BlueCar1", Name = "Oil Change", Odometer = 10000, Date = DateTime.Now.AddMonths(-1), type = TaskType.TireRotation });
+                InsertMaintenanceTask(new MaintenanceTask { Id = 1, VIN = "RedCar1", Odometer = 5000, Date = DateTime.Now.AddMonths(-2), type = TaskType.OilChange });
+                InsertMaintenanceTask(new MaintenanceTask { Id = 2, VIN = "BlueCar1", Odometer = 10000, Date = DateTime.Now.AddMonths(-1), type = TaskType.TireRotation });
             }
         }
 
