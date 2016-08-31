@@ -19,7 +19,7 @@ angular.module('maintenanceApp').config(function ($stateProvider) {
         controller: 'GasAutomobileListController'
     }).state('newGasAutomobile', { //state for adding a new movie
         url: '/gasautomobile',
-        templateUrl: 'Angular/partials/gasAutomobile-add.html',
+        templateUrl: 'Angular/partials/automobile-add.html',
         controller: 'GasAutomobileCreateController'
     }).state('viewGasAutomobile', { //state for showing single task
         url: '/gasAutomobile/:id',
@@ -31,7 +31,7 @@ angular.module('maintenanceApp').config(function ($stateProvider) {
         controller: 'ElectricAutomobileListController'
     }).state('newElectricAutomobile', {
         url: '/electricautomobile',
-        templateUrl: 'Angular/partials/electricAutomobile-add.html',
+        templateUrl: 'Angular/partials/automobile-add.html',
         controller: 'ElectricAutomobileCreateController'
     }).state('viewElectricAutomobile', {
         url: '/electricAutomobile/:id',
@@ -43,7 +43,7 @@ angular.module('maintenanceApp').config(function ($stateProvider) {
         controller: 'DieselAutomobileListController'
     }).state('newDieselAutomobile', {
         url: '/dieselautomobile',
-        templateUrl: 'Angular/partials/dieselAutomobile-add.html',
+        templateUrl: 'Angular/partials/automobile-add.html',
         controller: 'DieselAutomobileCreateController'
     }).state('viewDieselAutomobile', {
         url: '/dieselAutomobile/:id',

@@ -25,15 +25,16 @@ maintenanceApp.controller('GasAutomobileListController', function ($scope, $stat
     $scope.addAutomobileState = 'newGasAutomobile';
     $scope.viewAutomobileState = 'viewGasAutomobile';
 }).controller('GasAutomobileCreateController', function ($scope, $state, $stateParams, GasAutomobileService) {
-    $scope.gasAutomobile = new GasAutomobileService();  //create new task instance. Properties will be set via ng-model on UI
+    $scope.automobile = new GasAutomobileService();  //create new task instance. Properties will be set via ng-model on UI
+    $scope.automobile.hasNumberOfSparkPlugs = true;
 
-    $scope.addGasAutomobile = function () { //create a new task. Issues a POST to /api/tasks
-        $scope.gasAutomobile.$save(function () {
+    $scope.addAutomobile = function () { //create a new task. Issues a POST to /api/tasks
+        $scope.automobile.$save(function () {
             $state.go('gasAutomobiles'); // on success go back to home i.e. tasks state.
         });
     };
 }).controller('GasAutomobileViewController', function ($scope, $state, $stateParams, popupService, GasAutomobileService) {
-    $scope.automobile = GasAutomobileService.get({ id: $stateParams.id });
+    $scope.automobile = GasAutomobileService.get({ id: $stateParams.id });    
 
     $scope.deleteAutomobile = function (id) { // Delete a task. Issues a DELETE to /api/tasks/:id
         if (popupService.showPopup('Really delete this?')) {
@@ -58,10 +59,11 @@ maintenanceApp.controller('ElectricAutomobileListController', function ElectricA
         }
     };
 }).controller('ElectricAutomobileCreateController', function ElectricAutomobileCreateController($scope, $state, $stateParams, ElectricAutomobileService) {
-    $scope.electricAutomobile = new ElectricAutomobileService();  //create new task instance. Properties will be set via ng-model on UI
+    $scope.automobile = new ElectricAutomobileService();  //create new task instance. Properties will be set via ng-model on UI
+    $scope.automobile.hasBatteryPackWeight = true;
 
-    $scope.addElectricAutomobile = function () {
-        $scope.electricAutomobile.$save(function () {
+    $scope.addAutomobile = function () {
+        $scope.automobile.$save(function () {
             $state.go('electricAutomobiles');
         });
     };
@@ -82,10 +84,10 @@ maintenanceApp.controller('DieselAutomobileListController', function DieselAutom
         }
     };
 }).controller('DieselAutomobileCreateController', function DieselAutomobileCreateController($scope, $state, $stateParams, DieselAutomobileService) {
-    $scope.dieselAutomobile = new DieselAutomobileService();  //create new task instance. Properties will be set via ng-model on UI
+    $scope.automobile = new DieselAutomobileService();  //create new task instance. Properties will be set via ng-model on UI
 
-    $scope.addDieselAutomobile = function () {
-        $scope.dieselAutomobile.$save(function () {
+    $scope.addAutomobile = function () {
+        $scope.automobile.$save(function () {
             $state.go('dieselAutomobiles');
         });
     };
