@@ -10,8 +10,10 @@ angular.module('maintenanceApp').config(function ($stateProvider) {
         templateUrl: 'Angular/partials/task-view.html',
         controller: 'TaskViewController'
     }).state('newTask', { //state for adding a new movie
-        url: '/maintenancetask',
         templateUrl: 'Angular/partials/task-add.html',
+        params: {
+            vin: null
+        },
         controller: 'TaskCreateController'
     }).state('gasAutomobiles', { // state for showing all tasks
         url: '/gasautomobile',

@@ -1,7 +1,7 @@
 ﻿<table class="table automobiletable">
     <tr>
         <td><h3>Details for Automobile: {{automobile.VIN}}</h3></td>
-        <td></td>
+        <td><a class="btn btn-danger" ng-click="deleteAutomobile({id:automobile.VIN})">Delete</a></td>
     </tr>
     <tr>
         <td>VIN</td>
@@ -33,6 +33,6 @@
     </tr>
     <tr>
         <td></td>
-        <td><a class="btn btn-danger" ng-click="deleteAutomobile({id:automobile.VIN})">Delete</a></td>
+        <td><a class="btn btn-primary" ui-sref="newTask({vin:automobile.VIN})">Add Maintenance Task</a></td>
     </tr>
 </table>

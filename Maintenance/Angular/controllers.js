@@ -11,6 +11,8 @@
     };
 }).controller('TaskCreateController', function ($scope, $state, $stateParams, Task) {
     $scope.task = new Task();  //create new task instance. Properties will be set via ng-model on UI
+    
+    $scope.task.VIN = $stateParams.vin;
 
     $scope.addTask = function () { //create a new task. Issues a POST to /api/tasks
         $scope.task.$save(function () {

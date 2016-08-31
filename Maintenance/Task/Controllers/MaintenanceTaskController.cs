@@ -57,6 +57,7 @@ namespace Maintenance.Controllers
             return Content(HttpStatusCode.Accepted, newTask);
         }
 
+        [Route("api/automobiles/{vin}/maintenanceTasks")]
         public IEnumerable<MaintenanceTask> GetMaintenanceTasks(string vin)
         {
             var tasks = _repository.GetMaintenanceTasks(vin).ToList();
