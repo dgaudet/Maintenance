@@ -28,12 +28,13 @@ namespace Maintenance.Tests.Task
         {
             var task = _repo.GetTask(1);
             Assert.IsNotNull(task);
-            Assert.AreEqual(task.Id, 1);
-            Assert.AreEqual(task.VIN, "RedCar1");
-            Assert.AreEqual(task.Name, "Oil Change");
-            Assert.AreEqual(task.Odometer, 5000);
+            Assert.AreEqual(1, task.Id);
+            Assert.AreEqual("RedCar1", task.VIN);
+            Assert.AreEqual("Oil Change", task.Name);
+            Assert.AreEqual(5000, task.Odometer);
             var TwoMonthsAgo = DateTime.Now.AddMonths(-2);
-            Assert.AreEqual(task.Date.Date, TwoMonthsAgo.Date);
+            Assert.AreEqual(TwoMonthsAgo.Date, task.Date.Date);
+            Assert.AreEqual(TaskType.OilChange, task.type);
         }        
 
         [TestMethod]
@@ -41,12 +42,13 @@ namespace Maintenance.Tests.Task
         {
             var task = _repo.GetTask(2);
             Assert.IsNotNull(task);
-            Assert.AreEqual(task.Id, 2);
-            Assert.AreEqual(task.VIN, "BlueCar1");
-            Assert.AreEqual(task.Name, "Oil Change");
-            Assert.AreEqual(task.Odometer, 10000);
+            Assert.AreEqual(2, task.Id);
+            Assert.AreEqual("BlueCar1", task.VIN);
+            Assert.AreEqual("Oil Change", task.Name);
+            Assert.AreEqual(10000, task.Odometer);
             var OneMonthAgo = DateTime.Now.AddMonths(-1);
-            Assert.AreEqual(task.Date.Date, OneMonthAgo.Date);
+            Assert.AreEqual(OneMonthAgo.Date, task.Date.Date);
+            Assert.AreEqual(TaskType.TireRotation, task.type);
         }
 
         #endregion
@@ -112,22 +114,30 @@ namespace Maintenance.Tests.Task
         [TestMethod]
         public void InsertMaintenanceTask_ShouldAllowInsertingTask()
         {
-            _repo.InsertMaintenanceTask(new MaintenanceTask() { Id = 487834, VIN = "9977" });
+            _repo.InsertMaintenanceTask(new MaintenanceTask() { Id = 487834, VIN = "9977", type = TaskType.OilChange });
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void InsertMaintenanceTask_ShouldThrowArugumentException_GivenTaskWithNoType()
+        {
+            _repo.InsertMaintenanceTask(new MaintenanceTask() { Id = 44556734, VIN = "no type vin" });
         }
 
         [TestMethod]
         public void InsertMaintenanceTask_ShouldStoreTask()
         {
-            var expectedTask = new MaintenanceTask() { Id = 5, VIN = "11233", Name = "Oil Change", Odometer = 5000, Date = DateTime.Now.AddMonths(-2) };
+            var expectedTask = new MaintenanceTask() { Id = 5, VIN = "11233", Name = "Oil Change", Odometer = 5000, Date = DateTime.Now.AddMonths(-2), type = TaskType.GlowPlugReplacement };
             _repo.InsertMaintenanceTask(expectedTask);
 
             var actuaTask = _repo.GetTask(expectedTask.Id);
 
             Assert.IsNotNull(actuaTask);
-            Assert.AreEqual(expectedTask.VIN, actuaTask.VIN);
-            Assert.AreEqual(expectedTask.Odometer, actuaTask.Odometer);
-            Assert.AreEqual(expectedTask.Name, actuaTask.Name);
-            Assert.AreEqual(expectedTask.Date, actuaTask.Date);
+            Assert.AreEqual(actuaTask.VIN, expectedTask.VIN);
+            Assert.AreEqual(actuaTask.Odometer, expectedTask.Odometer);
+            Assert.AreEqual(actuaTask.Name, expectedTask.Name);
+            Assert.AreEqual(actuaTask.Date, expectedTask.Date);
+            Assert.AreEqual(actuaTask.type, expectedTask.type);
         }
 
         [TestMethod]
@@ -144,7 +154,7 @@ namespace Maintenance.Tests.Task
         [TestMethod]
         public void MaintenanceTaskRepository_ShouldRetainListOfTasks_GivenMultipleInstances()
         {
-            var expectedTask = new MaintenanceTask() { Id = 33, VIN = "1111" };
+            var expectedTask = new MaintenanceTask() { Id = 33, VIN = "1111", type = TaskType.OilChange };
             _repo.InsertMaintenanceTask(expectedTask);
 
             var repo2 = new MaintenanceTaskRepository();
@@ -161,7 +171,7 @@ namespace Maintenance.Tests.Task
         [TestMethod]
         public void GetMaintenanceTasks_ShouldReturn_InsertedTask()
         {
-            var expectedTask = new MaintenanceTask() { Id = 11, VIN = "1011" };
+            var expectedTask = new MaintenanceTask() { Id = 11, VIN = "1011", type = TaskType.OilChange };
             _repo.InsertMaintenanceTask(expectedTask);
 
             var tasks = _repo.GetMaintenanceTasks();
@@ -182,7 +192,7 @@ namespace Maintenance.Tests.Task
         [TestMethod]
         public void GetMaintenanceTasks_ShouldReturnCorrectTask_GivenVINWith1Task()
         {
-            var expectedTask = new MaintenanceTask() { Id = 778, VIN = "11233a", Name = "Oil Change", Odometer = 5000, Date = DateTime.Now.AddMonths(-2) };
+            var expectedTask = new MaintenanceTask() { Id = 778, VIN = "11233a", Name = "Oil Change", Odometer = 5000, Date = DateTime.Now.AddMonths(-2), type = TaskType.OilChange };
             _repo.InsertMaintenanceTask(expectedTask);
 
             var actualTasks = _repo.GetMaintenanceTasks(expectedTask.VIN);
@@ -202,7 +212,7 @@ namespace Maintenance.Tests.Task
         public void GetMaintenanceTasks_ShouldReturnCorrectTask_GivenExistingVinButDifferentVinCase()
         {
             var vin = "MULTIPLECaseVIN1";
-            var expectedTask = new MaintenanceTask() { Id = 124, VIN = vin, Name = "Oil Change", Odometer = 5000, Date = DateTime.Now.AddMonths(-2) };
+            var expectedTask = new MaintenanceTask() { Id = 124, VIN = vin, Name = "Oil Change", Odometer = 5000, Date = DateTime.Now.AddMonths(-2), type = TaskType.OilChange };
             _repo.InsertMaintenanceTask(expectedTask);
 
             var actualTasks = _repo.GetMaintenanceTasks(expectedTask.VIN.ToLower());
@@ -219,9 +229,9 @@ namespace Maintenance.Tests.Task
         public void GetMaintenanceTasks_ShouldReturnCorrectTasks_GivenVINWithMultipleTasks()
         {
             var vin = "newVin11";
-            var expectedTask1 = new MaintenanceTask() { Id = 99969, VIN = vin, Name = "Oil Change", Odometer = 5000, Date = DateTime.Now.AddMonths(-2) };
+            var expectedTask1 = new MaintenanceTask() { Id = 99969, VIN = vin, Name = "Oil Change", type = TaskType.OilChange };
             _repo.InsertMaintenanceTask(expectedTask1);
-            var expectedTask2 = new MaintenanceTask() { Id = 688886, VIN = vin, Name = "Oil Change", Odometer = 5000, Date = DateTime.Now.AddMonths(-2) };
+            var expectedTask2 = new MaintenanceTask() { Id = 688886, VIN = vin, Name = "Oil Change", type = TaskType.GlowPlugReplacement };
             _repo.InsertMaintenanceTask(expectedTask2);
 
             var actualTasks = _repo.GetMaintenanceTasks(expectedTask1.VIN);
@@ -243,7 +253,7 @@ namespace Maintenance.Tests.Task
         [TestMethod]
         public void DeleteMaintenanceTask_ShouldDeleteExistingTask()
         {
-            var existingTask = new MaintenanceTask() { Id = 789977, VIN = "vin for deletion" };
+            var existingTask = new MaintenanceTask() { Id = 789977, VIN = "vin for deletion", type = TaskType.OilChange };
             _repo.InsertMaintenanceTask(existingTask);
 
             _repo.DeleteMaintenanceTask(existingTask.Id);

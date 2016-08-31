@@ -106,6 +106,7 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="EnumExtensions.cs" />
     <Compile Include="Vehicle\Controllers\DieselAutomobileController.cs" />
     <Compile Include="Vehicle\DieselAutomobileRepository.cs" />
     <Compile Include="Vehicle\Controllers\ElectricAutomobileController .cs" />
