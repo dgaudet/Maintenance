@@ -1,3 +1,4 @@
-﻿<select name="taskTypes" id="taskTypes" class="form-control" ng-model="task.type" required>
+﻿<select id="taskTypes" class="form-control" ng-model="task.type" ng-required="true" name="taskTypes">
+    <option value="">Select a Type</option>
     <option ng-repeat="option in taskTypes" ng-value="option.Type">{{option.Description}}</option>
 </select>
