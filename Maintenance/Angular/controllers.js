@@ -1,4 +1,4 @@
-﻿var maintenanceApp = angular.module('maintenanceApp.controllers', []).controller('TaskListController', function ($scope, $state, $window, Task) {
+﻿var maintenanceApp = angular.module('maintenanceApp.controllers', ['ngMaterial', 'ngMessages']).controller('TaskListController', function ($scope, $state, $window, Task) {
     $scope.tasks = Task.query(); //fetch all tasks. Issues a GET to /api/tasks
 }).controller('TaskViewController', function ($scope, $state, $stateParams, popupService, Task) {
     $scope.task = Task.get({ id: $stateParams.id }); //Get a single task.Issues a GET to /api/tasks/:id
@@ -13,6 +13,20 @@
     $scope.task = new Task();  //create new task instance. Properties will be set via ng-model on UI
     
     $scope.task.VIN = $stateParams.vin;
+
+    $scope.myDate = new Date();
+    $scope.minDate = new Date(
+        $scope.myDate.getFullYear(),
+        $scope.myDate.getMonth() - 2,
+        $scope.myDate.getDate());
+    $scope.maxDate = new Date(
+        $scope.myDate.getFullYear(),
+        $scope.myDate.getMonth() + 2,
+        $scope.myDate.getDate());
+    $scope.onlyWeekendsPredicate = function (date) {
+        var day = date.getDay();
+        return day === 0 || day === 6;
+    };
 
     $scope.addTask = function () { //create a new task. Issues a POST to /api/tasks
         $scope.task.$save(function () {
