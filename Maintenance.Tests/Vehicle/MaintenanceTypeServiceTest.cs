@@ -43,9 +43,9 @@ namespace Maintenance.Tests.Vehicle
 
             Assert.IsNotNull(actualTypes);
             Assert.AreEqual(3, actualTypes.Count());
-            Assert.IsTrue(actualTypes.Contains(TaskType.OilChange));
-            Assert.IsTrue(actualTypes.Contains(TaskType.GlowPlugReplacement));
-            Assert.IsTrue(actualTypes.Contains(TaskType.TireRotation));
+            Assert.IsNotNull(actualTypes.FirstOrDefault(t => t.Type == TaskType.OilChange));
+            Assert.IsNotNull(actualTypes.FirstOrDefault(t => t.Type == TaskType.TireRotation));
+            Assert.IsNotNull(actualTypes.FirstOrDefault(t => t.Type == TaskType.GlowPlugReplacement));
         }
 
         [TestMethod]
@@ -58,9 +58,9 @@ namespace Maintenance.Tests.Vehicle
 
             Assert.IsNotNull(actualTypes);
             Assert.AreEqual(3, actualTypes.Count());
-            Assert.IsTrue(actualTypes.Contains(TaskType.OilChange));
-            Assert.IsTrue(actualTypes.Contains(TaskType.TireRotation));
-            Assert.IsTrue(actualTypes.Contains(TaskType.BatteryPackReplacement));
+            Assert.IsNotNull(actualTypes.FirstOrDefault(t => t.Type == TaskType.OilChange));
+            Assert.IsNotNull(actualTypes.FirstOrDefault(t => t.Type == TaskType.TireRotation));
+            Assert.IsNotNull(actualTypes.FirstOrDefault(t => t.Type == TaskType.BatteryPackReplacement));
         }
 
         [TestMethod]
@@ -73,9 +73,9 @@ namespace Maintenance.Tests.Vehicle
 
             Assert.IsNotNull(actualTypes);
             Assert.AreEqual(3, actualTypes.Count());
-            Assert.IsTrue(actualTypes.Contains(TaskType.OilChange));
-            Assert.IsTrue(actualTypes.Contains(TaskType.TireRotation));
-            Assert.IsTrue(actualTypes.Contains(TaskType.SparkPlugReplacement));
+            Assert.IsNotNull(actualTypes.FirstOrDefault(t => t.Type == TaskType.OilChange));
+            Assert.IsNotNull(actualTypes.FirstOrDefault(t => t.Type == TaskType.TireRotation));
+            Assert.IsNotNull(actualTypes.FirstOrDefault(t => t.Type == TaskType.SparkPlugReplacement));
         }
 
         [TestMethod]

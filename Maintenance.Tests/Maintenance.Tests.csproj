@@ -60,6 +60,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Task\MaintenanceTaskTypeControllerTest.cs" />
     <Compile Include="Vehicle\DieselAutomobileControllerTest.cs" />
     <Compile Include="Vehicle\ElectricAutomobileRepositoryTest.cs" />
     <Compile Include="Vehicle\ElectricAutomobileControllerTest.cs" />

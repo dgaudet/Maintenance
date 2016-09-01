@@ -1,12 +1,11 @@
 ﻿using Maintenance.Models;
+using Maintenance.Task.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Maintenance.Vehicle
 {
-    public class MaintenanceTypeService
+    public class MaintenanceTypeService : IMaintenanceTypeService
     {
         private IElectricAutomobileRepository _electricRepo;
         private IDieselAutomobileRepository _dieselRepo;
@@ -19,14 +18,14 @@ namespace Maintenance.Vehicle
             _gasRepo = gasRepo;
         }
 
-        public IEnumerable<TaskType> TaskTypesForAutomobile(string vin)
+        public IEnumerable<TaskTypeModel> TaskTypesForAutomobile(string vin)
         {
             if (string.IsNullOrWhiteSpace(vin))
             {
                 throw new ArgumentException("VIN is invalid");
             }
 
-            var taskTypes = new List<TaskType>();
+            var taskTypes = new List<TaskTypeModel>();
 
             var dieselAuto = _dieselRepo.GetAutomobile(vin);
             var electricAuto = _electricRepo.GetAutomobile(vin);
@@ -34,20 +33,20 @@ namespace Maintenance.Vehicle
 
             if (dieselAuto != null)
             {
-                taskTypes.Add(TaskType.OilChange);
-                taskTypes.Add(TaskType.TireRotation);
-                taskTypes.Add(TaskType.GlowPlugReplacement);
+                taskTypes.Add(new TaskTypeModel(TaskType.OilChange));
+                taskTypes.Add(new TaskTypeModel(TaskType.TireRotation));
+                taskTypes.Add(new TaskTypeModel(TaskType.GlowPlugReplacement));
             }
             else if (electricAuto != null)
             {
-                taskTypes.Add(TaskType.OilChange);
-                taskTypes.Add(TaskType.TireRotation);
-                taskTypes.Add(TaskType.BatteryPackReplacement);
+                taskTypes.Add(new TaskTypeModel(TaskType.OilChange));
+                taskTypes.Add(new TaskTypeModel(TaskType.TireRotation));
+                taskTypes.Add(new TaskTypeModel(TaskType.BatteryPackReplacement));
             } else if (gasAuto != null)
             {
-                taskTypes.Add(TaskType.OilChange);
-                taskTypes.Add(TaskType.TireRotation);
-                taskTypes.Add(TaskType.SparkPlugReplacement);
+                taskTypes.Add(new TaskTypeModel(TaskType.OilChange));
+                taskTypes.Add(new TaskTypeModel(TaskType.TireRotation));
+                taskTypes.Add(new TaskTypeModel(TaskType.SparkPlugReplacement));
             }
 
             return taskTypes;
