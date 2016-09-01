@@ -84,6 +84,7 @@
     <Content Include="Angular\app.js" />
     <Content Include="Angular\controllers.js" />
     <Content Include="Angular\Index.html" />
+    <Content Include="Angular\main.css" />
     <Content Include="Angular\Partials\automobile-add.html" />
     <Content Include="Angular\Partials\automobile-view.html" />
     <Content Include="Angular\Partials\automobiles.html" />
