@@ -69,7 +69,7 @@ maintenanceApp.controller('ElectricAutomobileListController', function ElectricA
             $state.go('electricAutomobiles');
         });
     };
-})
+});
 
 maintenanceApp.controller('DieselAutomobileListController', function DieselAutomobileListController($scope, $state, $window, DieselAutomobileService) {
     $scope.automobiles = DieselAutomobileService.query();
@@ -93,4 +93,8 @@ maintenanceApp.controller('DieselAutomobileListController', function DieselAutom
             $state.go('dieselAutomobiles');
         });
     };
-})
+});
+
+maintenanceApp.controller('TaskTypeListController', function DieselAutomobileListController($scope, $state, $stateParams, $window, TaskTypeService) {
+    $scope.taskTypes = TaskTypeService.query({ id: $scope.task.VIN });
+});

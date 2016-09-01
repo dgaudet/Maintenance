@@ -14,6 +14,13 @@ angular.module('maintenanceApp.services').factory('DieselAutomobileService', fun
     return $resource('http://localhost:52970/api/dieselautomobile/:id');
 });
 
+angular.module('maintenanceApp.services').factory('TaskTypeService', function ($resource) {
+    return $resource('http://localhost:52970/api/MaintenanceTaskType/:id');
+});
+
+angular.module('maintenanceApp.services').factory('AutomobileService', function ($resource) {
+    return $resource('http://localhost:52970/api/automobiles/:id/maintenanceTasks');
+});
 
 angular.module('maintenanceApp.services').service('popupService', ['$window', function ($window) {
     this.showPopup = function (message) {
