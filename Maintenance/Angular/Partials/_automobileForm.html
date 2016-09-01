@@ -1,43 +1,84 @@
 ﻿<div class="form-group">
     <label for="vin" class="col-sm-2 control-label">VIN</label>
-    <div class="col-sm-10">
-        <input type="text" ng-model="automobile.VIN" class="form-control" id="vin" placeholder="Automobile VIN Here" />
+    <div class="col-sm-6">
+        <input type="text" name="vin" ng-model="automobile.VIN" class="form-control" id="vin" 
+               placeholder="Automobile VIN Here" required ng-maxlength="50"/>
+    </div>
+    <div class="col-sm-4" ng-messages="addAutomobileForm.vin.$error">
+        <div class="field-validation-error" ng-message="required">Please enter VIN</div>
+        <div class="field-validation-error" ng-message="maxlength">The value must not exceed 50 characters</div>
     </div>
 </div>
 <div class="form-group">
     <label for="make" class="col-sm-2 control-label">Automobile Make</label>
-    <div class="col-sm-10">
-        <input type="text" ng-model="automobile.Make" class="form-control" id="name" placeholder="Automobile Make here" />
+    <div class="col-sm-6">
+        <input type="text" ng-model="automobile.Make" class="form-control" id="make" 
+               name="make" placeholder="Automobile Make here" required ng-maxlength="50"/>
+    </div>
+    <div class="col-sm-4" ng-messages="addAutomobileForm.make.$error">
+        <div class="field-validation-error" ng-message="required">Please enter Make</div>
+        <div class="field-validation-error" ng-message="maxlength">The value must not exceed 50 characters</div>
     </div>
 </div>
 <div class="form-group">
     <label for="model" class="col-sm-2 control-label">Model</label>
-    <div class="col-sm-10">
-        <input type="text" ng-model="automobile.Model" class="form-control" id="model" placeholder="Model here" />
+    <div class="col-sm-6">
+        <input type="text" ng-model="automobile.Model" class="form-control" id="model" placeholder="Model here"
+                name="model" required ng-maxlength="50"/>
+    </div>
+    <div class="col-sm-4" ng-messages="addAutomobileForm.model.$error">
+        <div class="field-validation-error" ng-message="required">Please enter Model</div>
+        <div class="field-validation-error" ng-message="maxlength">The value must not exceed 50 characters</div>
     </div>
 </div>
 <div class="form-group">
     <label for="odometer" class="col-sm-2 control-label">Odometer Reading</label>
-    <div class="col-sm-10">
-        <input type="text" ng-model="automobile.Odometer" class="form-control" id="odometer" placeholder="What is the Odometer Reading?" />
+    <div class="col-sm-5">
+        <input type="number" ng-model="automobile.Odometer" class="form-control" id="odometer" placeholder="What is the Odometer Reading?" 
+               name="odometer" required min="0" max="10000000"/>
+    </div>
+    <div class="col-sm-5" ng-messages="addAutomobileForm.odometer.$error">
+        <div class="field-validation-error" ng-message="required">Please enter Odometer reading</div>
     </div>
 </div>
 <div class="form-group">
     <label for="year" class="col-sm-2 control-label">Year</label>
-    <div class="col-sm-10">
-        <input type="text" ng-model="automobile.Year" class="form-control" id="year" placeholder="What is the year?" />
+    <div class="col-sm-2">
+        <input type="number" ng-model="automobile.Year" class="form-control" id="year"
+               name="year" required min="1950" max="2016"/>
+    </div>
+    <div class="col-sm-8" ng-messages="addAutomobileForm.year.$error">
+        <div class="field-validation-error" ng-message="required">Please enter Year</div>
     </div>
 </div>
 <div class="form-group"  ng-if="automobile.hasBatteryPackWeight">
-    <label for="batteryPackWeight" class="col-sm-2 control-label">Battery Pack Weight</label>
-    <div class="col-sm-10">
-        <input type="text" ng-model="automobile.BatteryPackWeight" class="form-control" id="batteryPackWeight" placeholder="How heavy is the battery pack?" />
+    <label for="batteryPackWeight" class="col-sm-2 control-label">Battery Pack Weight (lbs)</label>
+    <div class="col-sm-2">
+        <input type="number" ng-model="automobile.BatteryPackWeight" class="form-control" id="batteryPackWeight"
+               name="batteryPackWeight" required min="0" max="1000"/>
+    </div>
+    <div class="col-sm-6" ng-messages="addAutomobileForm.batteryPackWeight.$error">
+        <div class="field-validation-error" ng-message="required">Please enter weight</div>
     </div>
 </div>
 <div class="form-group" ng-if="automobile.hasNumberOfSparkPlugs">
     <label for="sparkPlugs" class="col-sm-2 control-label">Number of Spark Plugs</label>
-    <div class="col-sm-10">
-        <input type="text" ng-model="automobile.NumberOfSparkPlugs" class="form-control" id="sparkPlugs" placeholder="How many spark plugs?" />
+    <div class="col-sm-2">
+        <input type="number" ng-model="automobile.NumberOfSparkPlugs" class="form-control" id="sparkPlugs"
+               name="sparkPlugs" required min="0" max="12"/>
+    </div>
+    <div class="col-sm-6" ng-messages="addAutomobileForm.sparkPlugs.$error">
+        <div class="field-validation-error" ng-message="required">Please enter number of spark plugs</div>
+    </div>
+</div>
+<div class="form-group" ng-if="automobile.hasNumberOfGlowPlugs">
+    <label for="glowPlugs" class="col-sm-2 control-label">Number of Glow Plugs</label>
+    <div class="col-sm-2">
+        <input type="number" ng-model="automobile.NumberOfGlowPlugs" class="form-control" id="glowPlugs"
+               name="glowPlugs" min="0" max="12" />
+    </div>
+    <div class="col-sm-6" ng-messages="addAutomobileForm.glowPlugs.$error">
+        <div class="field-validation-error" ng-message="required">Please enter number of glow plugs</div>
     </div>
 </div>
 <div class="form-group">

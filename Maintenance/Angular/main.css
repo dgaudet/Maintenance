@@ -6,3 +6,9 @@
     color: #dd2c00;
     margin-left: 15px; 
 }
+
+.field-validation-error {
+    padding-top: 7px;
+    margin-bottom: 0;
+    color: #a94442;
+}
